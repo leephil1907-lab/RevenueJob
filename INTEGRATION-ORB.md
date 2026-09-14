@@ -1,7 +1,7 @@
 # Hero orb — Next.js / R3F integration
 
 The orb is a real React Three Fiber project, built and verified here; it is not a
-sketch. Everything below runs from `/home/user/orb-r3f`.
+sketch. Everything below runs from `orb-r3f/`.
 
 ```
 orb-r3f/
@@ -14,7 +14,7 @@ orb-r3f/
   test-math.mjs                   engine tests (node, no GPU)
   build.mjs                       code-split build + scope proof
   verify-browser.mjs              real-browser verification (uses puppeteer)
-  build-demo.mjs                  builds /home/user/orb-demo.html (self-contained)
+  build-demo.mjs                  builds ../orb-demo.html (self-contained)
 ```
 
 ## 1. Install
@@ -93,7 +93,7 @@ page falls back to the vanilla tiers untouched — the visitor never sees a gap.
 ```bash
 node test-math.mjs        # 32 engine checks: geometry, flow direction, hop rules
 node build.mjs            # code-split proof + sizes
-node build-demo.mjs       # writes /home/user/orb-demo.html
+node build-demo.mjs       # writes ../orb-demo.html
 node verify-browser.mjs   # 13 real-browser checks + screenshots/
 ```
 

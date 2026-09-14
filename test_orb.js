@@ -2,9 +2,12 @@
 // the hand-off to the compiled R3F scene. Each environment gets its own JSDOM
 // with stubs, then one shared reporter.
 const fs = require('fs');
+const path = require('path');
+const { join } = path;
+const ROOT = __dirname;   // this suite runs from the checkout it belongs to
 const { JSDOM, VirtualConsole } = require('jsdom');
 
-const html = fs.readFileSync('/home/user/index.html', 'utf8');
+const html = fs.readFileSync(join(ROOT, 'index.html'), 'utf8');
 const errors = [];
 const vc = new VirtualConsole();
 vc.on('jsdomError', e => {

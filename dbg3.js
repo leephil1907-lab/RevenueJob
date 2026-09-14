@@ -1,5 +1,7 @@
-const fs=require('fs'); const {JSDOM, VirtualConsole}=require('jsdom');
-const html=fs.readFileSync('/home/user/index.html','utf8');
+const fs=require('fs'); const path=require('path'); const {join}=path;
+const ROOT=__dirname;   // the checkout this script lives in
+const {JSDOM, VirtualConsole}=require('jsdom');
+const html=fs.readFileSync(join(ROOT, 'index.html'),'utf8');
 const errs=[]; const vc=new VirtualConsole();
 vc.on('jsdomError',e=>errs.push(((e&&e.stack)||String(e)).split('\n').slice(0,4).join(' | ')));
 vc.on('error',(...a)=>errs.push('console.error: '+a.join(' ')));

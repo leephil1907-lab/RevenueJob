@@ -14,7 +14,8 @@
 import puppeteer from 'puppeteer';
 import { mkdirSync } from 'node:fs';
 
-const DEMO = 'file:///home/user/orb-demo.html';
+const ROOT = new URL('..', import.meta.url).pathname;
+const DEMO = 'file://' + join(ROOT, 'orb-demo.html');
 const SHOTS = new URL('./screenshots/', import.meta.url).pathname;
 mkdirSync(SHOTS, { recursive: true });
 

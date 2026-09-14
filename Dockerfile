@@ -4,7 +4,7 @@
 # There is nothing to install: the site, the app server and the console use only
 # Node's standard library. That keeps the image small and the build reproducible.
 
-FROM node:20-alpine
+FROM node:24-alpine
 
 RUN apk add --no-cache tini su-exec
 

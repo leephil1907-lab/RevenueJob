@@ -34,7 +34,7 @@ services:
       sizeGB: 1
     envVars:
       - key: NODE_VERSION
-        value: 20.11.1
+        value: 24
       - key: HOST
         value: 0.0.0.0             # Render routes to the port, never to loopback
       - key: RP_DATA_DIR

@@ -133,7 +133,7 @@ cd orb-r3f && node test-math.mjs        → 32/32
 cd orb-r3f && node verify-browser.mjs   → 13/13
 ```
 
-`npm i jsdom` in `/home/user` first (not persisted); puppeteer + the apt libs
+`npm i jsdom` in the checkout root first (not persisted); puppeteer + the apt libs
 listed in `INTEGRATION-ORB.md` for the browser suite.
 
 ---

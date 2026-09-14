@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * assemble.js — builds /home/user/index.html from src/ + site.config.json + i18n/.
+ * assemble.js — builds index.html from src/ + site.config.json + i18n/.
  *
  * The generated file is the deliverable; never hand-edit it. Everything a marketer
  * or an operator would want to change lives in site.config.json (or the admin
@@ -13,7 +13,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = '/home/user';
+/* the checkout this file lives in — works from any directory, any machine */
+const ROOT = __dirname;
 const SRC = path.join(ROOT, 'src');
 const OUT = path.join(ROOT, 'index.html');
 const CHECK_ONLY = process.argv.includes('--check');

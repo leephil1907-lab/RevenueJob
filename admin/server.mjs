@@ -36,7 +36,7 @@
  * bootstrap non-interactively.
  */
 import { createServer } from 'node:http';
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, readdirSync, statSync, unlinkSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { randomBytes, scryptSync, timingSafeEqual, createHash } from 'node:crypto';
 import { join, extname } from 'node:path';
@@ -189,7 +189,11 @@ function snapshot(label) {
   const files = readdirSync(SNAPSHOT_DIR).filter(f => f.endsWith('.json')).sort();
   while (files.length > 20) {
     const old = files.shift();
-    try { execFileSync('rm', ['-f', join(SNAPSHOT_DIR, old), join(SNAPSHOT_DIR, old.replace('.json', '.label'))]); } catch (e) { }
+    try {
+      unlinkSync(join(SNAPSHOT_DIR, old));
+      const label = join(SNAPSHOT_DIR, old.replace('.json', '.label'));
+      if (existsSync(label)) unlinkSync(label);
+    } catch (e) { /* already gone */ }
   }
   return file;
 }

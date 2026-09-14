@@ -1,8 +1,11 @@
 /**
- * Produces /home/user/orb-demo.html — a self-contained page that runs the real
+ * Produces orb-demo.html at the checkout root — a self-contained page that runs the real
  * R3F scene with no network access at all (the bundle is inlined).
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+
+const ROOT = new URL('..', import.meta.url).pathname;   // the checkout this tool belongs to
 import { build } from 'esbuild';
 
 /* Bundle here rather than inlining whatever happened to be in out-demo already:
@@ -125,5 +128,5 @@ const html = `<!DOCTYPE html>
 </body>
 </html>`;
 
-writeFileSync('/home/user/orb-demo.html', html);
+writeFileSync(join(ROOT, 'orb-demo.html'), html);
 console.log('orb-demo.html written: ' + (html.length / 1024).toFixed(1) + ' KB');

@@ -1,8 +1,11 @@
 # RevenuePilot
 
+[![checks](https://github.com/leephil1907-lab/RevenueJob/actions/workflows/checks.yml/badge.svg)](https://github.com/leephil1907-lab/RevenueJob/actions/workflows/checks.yml)
+
 The marketing site, the customer dashboard and the administrator console for
 RevenuePilot — one repository, three surfaces, and **no runtime dependencies**:
-everything runs on Node 20's standard library.
+everything runs on Node's standard library (Node 22 or newer; CI covers 22 and 24,
+the current LTS lines).
 
 ```bash
 node assemble.js            # build index.html from src/ + site.config.json + i18n/

@@ -1,7 +1,7 @@
 name: checks
 
-# Every push to main and every pull request runs the same three things the
-# project runs locally: the product suites, the site suites, and a real browser.
+# Every push to main and every pull request runs what the project runs locally:
+# the product suites, the site suites, and a real browser.
 on:
   push:
     branches: [main]
@@ -16,18 +16,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── the product itself: no dependencies, so it always runs and always means
-  #    something. If these fail, the app or the console is broken.
+  # ── the product itself: nothing to install, so it always runs and always
+  #    means something. Runs on both supported Node lines.
   product:
-    name: build · app · console
+    name: build · app · console (node ${{ matrix.node }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['22', '24']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: ${{ matrix.node }}
 
       - name: Build the page and verify the config
         run: node assemble.js
@@ -47,8 +51,18 @@ jobs:
       - name: Administrator console suite
         run: node admin/test-admin.mjs
 
-  # ── the site contract: 140 checks in jsdom (no fabricated figures, config is
-  #    the only source of truth, the orb degrades, variants hold).
+      - name: No machine-specific paths anywhere in the checkout
+        run: |
+          # the bracket trick: the pattern below does not match its own text
+          if git grep -n -E "/hom[e]/|/User[s]/" -- . >/dev/null 2>&1; then
+            echo "::error::a file in this repository points at one machine's home directory"
+            git grep -n -E "/hom[e]/|/User[s]/" -- . || true
+            exit 1
+          fi
+          echo "every path is derived from the file's own location"
+
+  # ── the site contract: 140 checks in jsdom (no fabricated figures, the config
+  #    is the only source of truth, the orb degrades, the variants hold).
   site:
     name: site suites
     runs-on: ubuntu-latest
@@ -57,11 +71,11 @@ jobs:
       # this job never opens a browser, so skip Chromium
       PUPPETEER_SKIP_DOWNLOAD: 'true'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
           cache: npm
 
       - run: npm ci --no-audit --no-fund
@@ -75,8 +89,8 @@ jobs:
       - name: Layout variants
         run: node test_variants.js
 
-  # ── the journey in a real browser, and 50 viewports with no overflow. Slowest
-  #    job, and the one that catches what jsdom cannot.
+  # ── the journey in a real browser, and 50 viewports with no overflow. The
+  #    slowest job, and the one that catches what jsdom cannot.
   browser:
     name: browser · responsive
     runs-on: ubuntu-latest
@@ -84,15 +98,15 @@ jobs:
     env:
       PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.cache/puppeteer
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
           cache: npm
 
       - name: Cache Chromium
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: .cache/puppeteer
           key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
@@ -110,7 +124,7 @@ jobs:
 
       - name: Keep the screenshots if a check failed
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: responsive-screenshots
           path: screenshots/

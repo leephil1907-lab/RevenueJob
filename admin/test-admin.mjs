@@ -136,7 +136,7 @@ const sform = { csrf: sCsrf, 'site.name': before.site.name, 'site.title': before
 sform['seo.title'] = 'Round-trip probe title';
 r = await post('/settings', sform);
 ok('settings save accepted', r.status === 200 || r.status === 303, 'got ' + r.status);
-const after = JSON.parse((await import('node:fs')).readFileSync('/home/user/site.config.json', 'utf8'));
+const after = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
 ok('settings change persisted to site.config.json', after.seo.title === 'Round-trip probe title', JSON.stringify(after.seo.title));
 let snaps = [];
 try { snaps = fs.readdirSync(dataDir + '/snapshots'); } catch (e) { snaps = []; }
@@ -146,7 +146,7 @@ const snapName = (r.body.match(/name="file" value="([^"]+)"/) || [])[1];
 ok('snapshot is listed with a rollback form', !!snapName, snapName);
 if (snapName) {
   r = await post('/rollback', { csrf: sCsrf, file: snapName });
-  const rb = JSON.parse((await import('node:fs')).readFileSync('/home/user/site.config.json', 'utf8'));
+  const rb = JSON.parse(readFileSync(CONFIG_PATH, 'utf8'));
   ok('rollback restored the previous config', rb.seo.title === before.seo.title, JSON.stringify(rb.seo.title));
 }
 

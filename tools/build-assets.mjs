@@ -22,7 +22,7 @@ import { execFileSync } from 'node:child_process';
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { readFileSync } from 'node:fs';
 
-const ROOT = '/home/user';
+const ROOT = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const cfg = JSON.parse(readFileSync(`${ROOT}/site.config.json`, 'utf8'));
 const locales = JSON.parse(readFileSync(`${ROOT}/i18n/locales.json`, 'utf8'));
 

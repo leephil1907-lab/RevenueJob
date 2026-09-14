@@ -9,12 +9,15 @@
 //   5. the console behaves (empty states, kill switch, audit trail).
 // ============================================================================
 const fs = require('fs');
+const path = require('path');
+const { join } = path;
+const ROOT = __dirname;   // this suite runs from the checkout it belongs to
 const { JSDOM, VirtualConsole } = require('jsdom');
 
-const html = fs.readFileSync('/home/user/index.html', 'utf8');
-const cfg = JSON.parse(fs.readFileSync('/home/user/site.config.json', 'utf8'));
-const locales = JSON.parse(fs.readFileSync('/home/user/i18n/locales.json', 'utf8')).locales;
-const strings = JSON.parse(fs.readFileSync('/home/user/i18n/strings.json', 'utf8'));
+const html = fs.readFileSync(join(ROOT, 'index.html'), 'utf8');
+const cfg = JSON.parse(fs.readFileSync(join(ROOT, 'site.config.json'), 'utf8'));
+const locales = JSON.parse(fs.readFileSync(join(ROOT, 'i18n/locales.json'), 'utf8')).locales;
+const strings = JSON.parse(fs.readFileSync(join(ROOT, 'i18n/strings.json'), 'utf8'));
 
 const errors = [];
 const vc = new VirtualConsole();

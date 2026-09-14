@@ -14,11 +14,17 @@
  */
 import puppeteer from 'puppeteer';
 import { mkdirSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const URL = 'file:///home/user/index.html';
+/* named from this file's own location; note that a local binding called `URL`
+   would shadow the global one for every line above it, so the page URL is
+   called PAGE_URL */
+const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
+const PAGE_URL = pathToFileURL(join(ROOT, 'index.html')).href;
 const SHOTS = process.argv.includes('--shots');
 const WIDTHS = [1920, 1440, 1280, 1080, 900, 768, 560, 430, 390, 360];
-const OUT = '/home/user/screenshots';
+const OUT = join(ROOT, 'screenshots');
 
 const overflowProbe = () => {
   const de = document.documentElement;
@@ -82,7 +88,7 @@ let failures = 0;
 
 async function visit(width, height, label, prepare) {
   await page.setViewport({ width, height, deviceScaleFactor: 1 });
-  await page.goto(URL, { waitUntil: 'networkidle2', timeout: 90000 });
+  await page.goto(PAGE_URL, { waitUntil: 'networkidle2', timeout: 90000 });
   await new Promise(r => setTimeout(r, 700));
   if (prepare) { await prepare(); await new Promise(r => setTimeout(r, 900)); }
   const res = await page.evaluate(overflowProbe);

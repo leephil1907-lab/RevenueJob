@@ -2,9 +2,12 @@
 //   node test_variants.js reduced   → accessible static experience, nothing essential hidden
 //   node test_variants.js mobile    → touch device: no cursor system, simplified particles, story intact
 const fs = require('fs');
+const path = require('path');
+const { join } = path;
+const ROOT = __dirname;   // this suite runs from the checkout it belongs to
 const { JSDOM, VirtualConsole } = require('jsdom');
 const MODE = process.argv[2] || 'reduced';
-const html = fs.readFileSync('/home/user/index.html', 'utf8');
+const html = fs.readFileSync(join(ROOT, 'index.html'), 'utf8');
 const errors = [];
 const vc = new VirtualConsole();
 vc.on('jsdomError', e => { if (!/Not implemented/i.test((e && e.message) || '')) errors.push((e && e.message) || 'err'); });

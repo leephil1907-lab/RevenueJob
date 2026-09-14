@@ -95,4 +95,4 @@ await build({
 });
 const demo = readFileSync('out-demo/orb.js');
 console.log('\n  standalone demo bundle: ' + size(demo));
-console.log('  (inlined into /home/user/orb-demo.html — self-contained, no network)\n');
+console.log('  (inlined into orb-demo.html — self-contained, no network)\n');
