@@ -9,6 +9,7 @@ data/
 .env.*
 .github-token
 tools/git-credential-github.sh
+tools/git-setup.sh
 
 # the console's hashed password, its sessions and its lockout timers
 admin/.admin.json
