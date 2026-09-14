@@ -19,6 +19,9 @@ admin/snapshots/
 
 *.log
 
+# temp files the icon build leaves behind (glib's goutputstream)
+*.goutputstream-*
+
 # ── sandbox and machine plumbing: never part of the project ──────────────────
 .npm/
 .cache/
