@@ -1,0 +1,61 @@
+# fly.toml — the same project on Fly.io, with a volume for persistent storage.
+#
+#   fly launch --no-deploy --copy-config      # keep this file, pick a region
+#   fly volumes create revenuepilot_data --size 1 --region fra
+#   fly secrets set SESSION_PEPPER="$(openssl rand -hex 32)" \
+#                   RP_ADMIN_PASSWORD='…' \
+#                   MAIL_FROM='RevenuePilot <hello@your-domain>' \
+#                   RESEND_API_KEY='re_…'
+#   fly deploy
+#
+# Reaching the console: `fly proxy 8787:127.0.0.1:8787` opens it on your own
+# machine at http://127.0.0.1:8787 — no admin password ever travels the public
+# internet. (`fly ssh console` also works if you prefer a shell.)
+#
+app = "revenuepilot"
+primary_region = "fra"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  HOST = "0.0.0.0"
+  PORT = "8788"
+  RP_DATA_DIR = "/var/data"
+  RP_ADMIN_STATE = "/var/data/admin-state.json"
+  RP_ADMIN_PORT = "8787"
+  RP_SECURE_COOKIES = "1"
+  NODE_ENV = "production"
+
+# the disk: store.json, outbox/ and the lock file survive every deploy
+[mounts]
+  source = "revenuepilot_data"
+  destination = "/var/data"
+
+[http_service]
+  internal_port = 8788
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "10s"
+    method = "GET"
+    path = "/health"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+# One machine only: two machines writing the same JSON store is not a
+# configuration this project supports (the store is a file, not a database).
+# Scaling out means moving to a real database first.

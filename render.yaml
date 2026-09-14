@@ -1,0 +1,59 @@
+# render.yaml — one-click deploy of RevenuePilot on Render, with persistent storage.
+#
+#   1. push this repository to GitHub
+#   2. Render dashboard → New → Blueprint → pick the repo
+#   3. Render reads this file, creates the service and the disk, then asks you for
+#      the marked secrets (RP_ADMIN_PASSWORD, MAIL_FROM, …) — no other setup step
+#
+# The disk is what makes this host work at all: the store is a single JSON file
+# plus the outbox of queued mail, and both live under RP_DATA_DIR. Without a
+# disk every deploy would start with an empty database.
+#
+# Two honest limits of the disk on Render, neither of which breaks this project:
+#   · disks need a paid instance type (Starter and up) — the free plan cannot
+#     attach one, so a free deploy would silently lose every account on restart
+#   · a service with a disk runs exactly one instance and cannot do zero-downtime
+#     deploys — expect a few seconds of downtime per release, which is why
+#     RP_SECURE_COOKIES=1 is set but sessions are cheap to re-establish
+#
+services:
+  - type: web
+    name: revenuepilot
+    runtime: node
+    plan: starter
+    region: frankfurt          # closest of Render's regions to Lagos; change if your users are elsewhere
+    branch: main
+    autoDeploy: true
+    # the project has no runtime dependencies — the build only needs Node
+    buildCommand: node assemble.js
+    startCommand: node server/start.mjs
+    healthCheckPath: /health
+    disk:
+      name: revenuepilot-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.1
+      - key: HOST
+        value: 0.0.0.0             # Render routes to the port, never to loopback
+      - key: RP_DATA_DIR
+        value: /var/data           # ← the mounted disk: store.json, outbox/, lock
+      - key: RP_ADMIN_STATE
+        value: /var/data/admin-state.json
+      - key: RP_ADMIN_PORT
+        value: 8787
+      - key: RP_SECURE_COOKIES
+        value: 1
+      - key: SESSION_PEPPER
+        generateValue: true        # Render invents a strong value; keep it stable
+      - key: PUBLIC_URL
+        sync: false                # https://your-domain — must match site.config.json
+      - key: RP_ADMIN_HOSTS
+        sync: false                # admin.your-domain — see "reaching the console" in DEPLOY.md
+      - key: RP_ADMIN_PASSWORD
+        sync: false                # the password you will type into the console
+      - key: MAIL_FROM
+        sync: false                # e.g. RevenuePilot <hello@your-domain>
+      - key: RESEND_API_KEY
+        sync: false                # or SMTP_* below; leave all mail vars empty to queue instead
