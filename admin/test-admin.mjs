@@ -31,8 +31,24 @@ const env = { ...process.env, PORT: String(PORT), RP_ADMIN_PASSWORD: 'RoundTripP
 const ROOT = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const srv = spawn('node', ['admin/server.mjs'], { env, cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
 const stopServer = () => { try { srv.kill('SIGTERM'); } catch (e) { /* already gone */ } };
+/* this suite edits site.config.json to prove the settings round-trip works, so
+   it keeps the original bytes and puts them back however we leave — a crash
+   used to be able to strand a probe value in the shipped config */
+let configBytes = null;
+const CONFIG_PATH = ROOT + '/site.config.json';
+const restoreConfig = () => {
+  try {
+    if (configBytes !== null && readFileSync(CONFIG_PATH, 'utf8') !== configBytes) {
+      writeFileSync(CONFIG_PATH, configBytes);
+    }
+  } catch (e) { /* nothing more we can do on the way out */ }
+};
+process.on('exit', restoreConfig);
 process.on('exit', stopServer);
 process.on('SIGINT', () => { stopServer(); process.exit(130); });
+/* CI and shells send SIGTERM: exit cleanly so the config is put back and no
+   console is left listening */
+process.on('SIGTERM', () => { stopServer(); process.exit(143); });
 process.on('uncaughtException', e => { stopServer(); console.error(e); process.exit(1); });
 let log = ''; srv.stdout.on('data', d => log += d); srv.stderr.on('data', d => log += d);
 await new Promise(r => setTimeout(r, 1600));
@@ -113,8 +129,8 @@ ok('verify runs the build check', /PASS|checks|verified|ok/i.test(r.body));
 
 /* 5. settings save → snapshot → rollback */
 const fs = await import('node:fs');
-const CONFIG_PATH = ROOT + '/site.config.json';
-const originalBytes = fs.readFileSync(CONFIG_PATH, 'utf8');
+const originalBytes = readFileSync(CONFIG_PATH, 'utf8');
+configBytes = originalBytes;   // restored on exit even if we crash
 const before = JSON.parse(originalBytes);
 const sform = { csrf: sCsrf, 'site.name': before.site.name, 'site.title': before.site.title + '', 'site.description': before.site.description, 'seo.primaryKeyword': before.seo.primaryKeyword, 'site.url': before.site.url };
 sform['seo.title'] = 'Round-trip probe title';

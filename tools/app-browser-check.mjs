@@ -85,4 +85,16 @@ out.errors = errs.slice(0, 4);
 console.log(JSON.stringify(out, null, 2));
 await b.close();
 if (own) { try { own.proc.kill('SIGTERM'); } catch (e) { /* gone */ } rmSync(own.dir, { recursive: true, force: true }); }
-process.exit(out.errors && out.errors.length ? 1 : 0);
+/* a missing note or a hidden panel is a failure, not just a page error */
+const broken = [];
+if (!out.signInVisible) broken.push('sign-in form not visible');
+if (!out.registerShown) broken.push('register panel did not open');
+if (!out.forgotFromHash) broken.push('forgot panel did not open from the hash');
+if (!out.resetFromHash) broken.push('reset panel did not open from the hash');
+if (String(out.registerNote).startsWith('missing')) broken.push('registration produced no note');
+if (String(out.enquiryNote).startsWith('missing')) broken.push('enquiry produced no note');
+if (out.errors && out.errors.length) broken.push(...out.errors);
+if (broken.length) {
+  console.log('\n  ' + broken.length + ' problem(s): ' + broken.join(' | ') + '\n');
+}
+process.exit(broken.length ? 1 : 0);

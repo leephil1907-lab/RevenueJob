@@ -1,0 +1,118 @@
+name: checks
+
+# Every push to main and every pull request runs the same three things the
+# project runs locally: the product suites, the site suites, and a real browser.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── the product itself: no dependencies, so it always runs and always means
+  #    something. If these fail, the app or the console is broken.
+  product:
+    name: build · app · console
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build the page and verify the config
+        run: node assemble.js
+
+      - name: The committed page matches src/ and the config
+        run: |
+          if ! git diff --quiet -- index.html; then
+            echo "::error file=index.html::index.html is stale — run \`node assemble.js\` and commit the result"
+            git --no-pager diff --stat -- index.html
+            exit 1
+          fi
+          echo "index.html is in sync with src/ + site.config.json + i18n/"
+
+      - name: Application server suite
+        run: node server/test-app.mjs
+
+      - name: Administrator console suite
+        run: node admin/test-admin.mjs
+
+  # ── the site contract: 140 checks in jsdom (no fabricated figures, config is
+  #    the only source of truth, the orb degrades, variants hold).
+  site:
+    name: site suites
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # this job never opens a browser, so skip Chromium
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Site contract
+        run: node test_smoke.js
+
+      - name: Hero orb
+        run: node test_orb.js
+
+      - name: Layout variants
+        run: node test_variants.js
+
+  # ── the journey in a real browser, and 50 viewports with no overflow. Slowest
+  #    job, and the one that catches what jsdom cannot.
+  browser:
+    name: browser · responsive
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PUPPETEER_CACHE_DIR: ${{ github.workspace }}/.cache/puppeteer
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Cache Chromium
+        uses: actions/cache@v4
+        with:
+          path: .cache/puppeteer
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: The customer journey in Chrome
+        run: node tools/app-browser-check.mjs
+
+      - name: The console in Chrome
+        run: node tools/admin-browser-check.mjs
+
+      - name: 50 viewports, no overflow
+        run: node tools/audit-responsive.mjs
+
+      - name: Keep the screenshots if a check failed
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-screenshots
+          path: screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
