@@ -1,0 +1,317 @@
+<!-- ============ APPROVALS ============ -->
+        <section class="os-pane" data-os-pane="approvals">
+          <div class="os-h">
+            <div><h3>Approval inbox</h3><p>human review center · nothing sends without your policy</p></div>
+            <div class="r">
+              <button class="btn btn-sm btn-ghost" data-approve-all data-cursor="button">Approve standard queue</button>
+              <span class="pill" id="apprStatus">Queue empty</span>
+            </div>
+          </div>
+          <div class="appr-counts">
+            <span class="acount blue"><i></i><b id="cntMsgs">0</b> messages waiting</span>
+            <span class="acount amber"><i></i><b id="cntHigh">0</b> high-value leads</span>
+            <span class="acount red"><i></i><b id="cntOdd">0</b> unusual request</span>
+            <span class="acount"><i style="background:var(--tx-4)"></i>Median review time <b>—</b></span>
+          </div>
+          <div class="appr" id="apprList"></div>
+        </section>
+
+        <!-- ============ COPILOT ============ -->
+        <section class="os-pane" data-os-pane="copilot">
+          <div class="os-h">
+            <div><h3>Sales Copilot</h3><p>assists your humans in the call · AI + team, not AI instead of team</p></div>
+            <div class="r"><span class="pill cy"><span class="dot"></span> Ready</span><span class="pill">Dry run · nothing sends</span></div>
+          </div>
+
+          <div class="split a">
+            <div class="call">
+              <div class="hd">
+                <div>
+                  <div style="font-size:15.6px;font-weight:570;letter-spacing:-.02em">Read any reply before you send</div>
+                  <div class="tiny" style="margin-top:5px">Paste the prospect's words — nothing leaves this page</div>
+                </div>
+                <span class="livedot"><i></i> Idle</span>
+                <span class="wave" aria-hidden="true">
+                  <i style="animation-delay:0s"></i><i style="animation-delay:.12s"></i><i style="animation-delay:.24s"></i>
+                  <i style="animation-delay:.36s"></i><i style="animation-delay:.48s"></i><i style="animation-delay:.6s"></i>
+                  <i style="animation-delay:.72s"></i><i style="animation-delay:.84s"></i>
+                </span>
+              </div>
+
+              <div class="sent">
+                <label class="lbl" for="copInput"><span>Prospect reply</span><span id="copSentLab">—</span></label>
+                <textarea class="txt" id="copInput" rows="3" placeholder="Paste the reply you received…" aria-label="Paste the prospect reply to analyse"></textarea>
+                <span class="track" aria-hidden="true"><span class="knob" id="copSentKnob" style="left:0%"></span></span>
+              </div>
+
+              <div class="cop-grid">
+                <div class="cop-cell">
+                  <div class="k">Likely objection</div>
+                  <div class="v" id="copObj">—</div>
+                  <p id="copObjNote">Named from the words you paste.</p>
+                </div>
+                <div class="cop-cell">
+                  <div class="k">Next best action</div>
+                  <div class="v" id="copNext">—</div>
+                  <p id="copNextNote">Proposed, never automatic.</p>
+                </div>
+              </div>
+
+              <div class="cop-cell" style="margin-top:12px">
+                <div class="k">Suggested response</div>
+                <p id="copReply" style="font-size:13.6px;color:var(--tx);margin-top:9px;line-height:1.68" class="muted">The draft appears here, built from your approved product facts and your pricing — never from invented claims.</p>
+                <div class="row" style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">
+                  <button class="btn btn-sm btn-primary magnet" data-cursor="button" data-copy-move="copReply" data-toast="Draft copied to your notes. Nothing was sent.">Copy draft</button>
+                  <button class="btn btn-sm btn-ghost" data-cursor="button" id="copCycle">Next suggestion</button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>What you pasted</h3><p>speaker-labelled, in your browser only</p></div></div>
+                <div class="transcript" id="copTranscript"></div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Deal intelligence</h3><p>updated during the call</p></div></div>
+                <div class="grid-2" style="gap:10px">
+                  <div class="fc"><div class="k">Deal value</div><div class="v" data-money="">—</div><div class="d">from your pipeline calculator</div></div>
+                  <div class="fc hot"><div class="k">Close probability</div><div class="v" id="copProb">—</div><div class="d">needs closed-deal history</div></div>
+                </div>
+                <div class="why" style="margin-top:14px">
+                  <div class="why-row"><span class="n">01</span><span>Hiring language is read as <b>expansion intent</b>.</span></div>
+                  <div class="why-row"><span class="n">02</span><span>A named competitor is flagged as <b>comparison risk</b>.</span></div>
+                  <div class="why-row"><span class="n">03</span><span>Security or procurement wording routes to your <b>trust pack</b>.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ INBOX ============ -->
+        <section class="os-pane" data-os-pane="inbox">
+          <div class="os-h">
+            <div><h3>Universal inbox</h3><p>every channel, one thread history</p></div>
+            <div class="r"><span class="pill cy" id="inboxMeta">No conversations yet</span></div>
+          </div>
+          <div class="chips" id="inboxChannels"></div>
+          <div class="split a" style="margin-top:14px">
+            <div class="panel-x" style="padding:12px">
+              <div class="conv-list" id="convList"></div>
+            </div>
+            <div class="panel-x">
+              <div class="os-h">
+                <div><h3 id="threadName">No thread selected</h3><p id="threadMeta">—</p></div>
+                <div class="r" id="threadTags"></div>
+              </div>
+              <div class="thread" id="threadBody"></div>
+              <div class="composer">
+                <textarea id="composerBox" aria-label="Reply" placeholder="Reply, or generate a draft with the agent…"></textarea>
+                <div class="row">
+                  <button class="btn btn-sm btn-ghost" data-cursor="button" id="draftBtn">AI draft</button>
+                  <button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Summary appears once a conversation is open.">Summarize</button>
+                  <span class="tiny" id="composerHint" style="margin-left:auto">Policy: email requires approval</span>
+                  <button class="btn btn-sm btn-primary magnet" data-cursor="button" id="sendBtn" data-outbound>Send</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ PROSPECTS ============ -->
+        <section class="os-pane" data-os-pane="prospects">
+          <div class="os-h">
+            <div><h3>Prospects</h3><p id="prospectsMeta">No prospects imported</p></div>
+            <div class="r">
+              <button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Filters apply to your own imported accounts.">Filters</button>
+              <button class="btn btn-sm btn-primary magnet" data-os-jump="builder" data-cursor="button">Add to agent</button>
+            </div>
+          </div>
+          <div class="dash">
+            <div class="kpi"><div class="kpi-lab">In-market accounts</div><div class="kpi-num nums">—</div><div class="kpi-delta muted">no data</div></div>
+            <div class="kpi"><div class="kpi-lab">Qualified today</div><div class="kpi-num nums">—</div><div class="kpi-delta muted">no data</div></div>
+            <div class="kpi"><div class="kpi-lab">In conversation</div><div class="kpi-num nums">—</div><div class="kpi-delta muted">no data</div></div>
+            <div class="kpi"><div class="kpi-lab">Meetings booked</div><div class="kpi-num nums">—</div><div class="kpi-delta muted">no data</div></div>
+          </div>
+          <div class="table" id="consoleTable" style="margin-top:14px">
+            <div class="tr head"><span>Account</span><span>Fit</span><span>Stage</span><span class="hide-s">Owner</span><span class="hide-s">Score</span></div>
+          </div>
+        </section>
+
+        <!-- ============ LEAD INTELLIGENCE ============ -->
+        <section class="os-pane" data-os-pane="intel">
+          <div class="os-h">
+            <div><h3>Lead intelligence</h3><p>why this account is worth your team's time</p></div>
+            <div class="r">
+              <select class="sel" id="intelSelect" aria-label="Select prospect">
+                <option value="">No prospects yet</option>
+              </select>
+              <span class="pill" id="intelStatus">Awaiting a data source</span>
+            </div>
+          </div>
+
+          <div class="split a">
+            <div class="panel-x">
+              <div class="intel-head">
+                <span class="intel-av" id="intelAv">NL</span>
+                <div style="min-width:0">
+                  <div style="font-size:19px;font-weight:600;letter-spacing:-.03em" id="intelName">No prospect selected</div>
+                  <div class="tiny" style="margin-top:5px" id="intelMeta">—</div>
+                </div>
+                <div style="margin-left:auto;text-align:right">
+                  <div class="tiny">Fit score</div>
+                  <div style="font-size:26px;font-weight:640;letter-spacing:-.045em;color:var(--cy);font-variant-numeric:tabular-nums" id="intelFit">—</div>
+                </div>
+              </div>
+
+              <div class="scores" id="intelScores"></div>
+
+              <dl class="kv" id="intelKv" style="margin-top:18px"></dl>
+            </div>
+
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Why is this lead valuable?</h3><p>agent reasoning · business terms</p></div></div>
+                <div class="why" id="intelWhy"></div>
+                <div class="core-legend" style="margin-top:16px">
+                  <span class="pill cy" id="intelConf">Confidence —</span>
+                  <span class="pill" id="intelSources">Sources —</span>
+                  <span class="pill" id="intelRefresh">Not refreshed</span>
+                </div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Next actions</h3><p>ranked by expected value</p></div></div>
+                <div class="next-list" id="intelActions"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ REVENUE ============ -->
+        <section class="os-pane" data-os-pane="revenue">
+          <div class="os-h">
+            <div><h3>Revenue intelligence</h3><p>forecast · attribution · what-if scenarios · coaching</p></div>
+            <div class="r"><span class="pill" id="revStatus">Awaiting your inputs</span></div>
+          </div>
+          <div class="subtabs" id="revTabs">
+            <button class="subtab on" data-sub="forecast" data-cursor="button">Forecast</button>
+            <button class="subtab" data-sub="attribution" data-cursor="button">Attribution</button>
+            <button class="subtab" data-sub="whatif" data-cursor="button">What-if</button>
+            <button class="subtab" data-sub="coach" data-cursor="button">AI coach</button>
+          </div>
+
+          <!-- forecast -->
+          <div class="subpane on" data-subpane="forecast">
+            <div class="forecast" style="margin-top:14px">
+              <div class="fc"><div class="k">Current pipeline</div><div class="v" data-money="">—</div><div class="d">open opportunities</div></div>
+              <div class="fc"><div class="k">Weighted pipeline</div><div class="v" data-money="">—</div><div class="d">probability-adjusted</div></div>
+              <div class="fc hot"><div class="k">Expected revenue</div><div class="v" data-money="">—</div><div class="d">this month</div></div>
+              <div class="fc"><div class="k">Forecast confidence</div><div class="v" id="fcConf">—</div><div class="d">model + pipeline hygiene</div></div>
+            </div>
+            <div class="grid-2" style="margin-top:14px">
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Pipeline vs weighted · 12 months</h3><p>from your model</p></div></div>
+                <div class="chart-shell"><div class="gridlines"></div><canvas id="osRevChart"></canvas></div>
+                <div class="legend"><span><i></i>Influenced</span><span class="v"><i></i>Agent-attributed</span></div>
+              </div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Forecast statement</h3><p>plain language</p></div></div>
+                <p style="font-size:14.6px;line-height:1.7;color:var(--tx-2);margin-top:10px" id="fcStatement"></p>
+                <div class="sim-bar" style="margin-top:16px">
+                  <div class="row"><span class="tiny">Target</span><span class="bar"><i id="fcTargetBar" style="width:0"></i></span><span class="tiny" data-money="">—</span></div>
+                  <div class="row"><span class="tiny">Forecast</span><span class="bar"><i id="fcForecastBar" style="width:0"></i></span><span class="tiny" data-money="">—</span></div>
+                  <div class="row"><span class="tiny">Confidence floor</span><span class="bar"><i id="fcFloorBar" style="width:0"></i></span><span class="tiny" data-money="">—</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- attribution -->
+          <div class="subpane" data-subpane="attribution">
+            <div class="panel-x" style="margin-top:14px">
+              <div class="os-h">
+                <div><h3>Attribution graph</h3><p>campaign → conversation → opportunity → closed revenue</p></div>
+                <div class="r"><span class="pill" id="attrStatus">No data to trace yet</span></div>
+              </div>
+              <svg class="attr-svg" id="attrSvg" viewBox="0 0 900 340" role="img" aria-label="Revenue attribution from campaigns through conversations and opportunities to closed deals"></svg>
+            </div>
+            <div class="grid-2" style="margin-top:14px">
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Where revenue came from</h3><p>by campaign</p></div></div>
+                <div class="logstream" id="attrTable" style="max-height:none"></div>
+              </div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Model</h3><p>how attribution is calculated</p></div></div>
+                <p style="font-size:13.2px;line-height:1.68;color:var(--tx-2);margin-top:10px">
+                  Multi-touch: every conversation is linked to its originating campaign, every opportunity to its
+                  conversations, every closed deal to its opportunity. First-touch credit is kept alongside
+                  last-touch so finance can audit either view.
+                </p>
+                <div class="core-legend" style="margin-top:14px">
+                  <span class="pill">First-touch</span><span class="pill">Last-touch</span><span class="pill cy">Multi-touch (default)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- what-if -->
+          <div class="subpane" data-subpane="whatif">
+            <div class="sim" style="margin-top:14px">
+              <div class="panel-x pad">
+                <div class="os-h"><div><h3>What if?</h3><p>strategic planning · changes apply to projections only</p></div></div>
+
+                <div class="ctrl">
+                  <div class="ctrl-lab"><span>Prospects / month</span><b id="wiVolLab">500</b></div>
+                  <input type="range" min="100" max="2000" step="25" value="500" id="wiVol" aria-label="Prospects per month">
+                </div>
+                <div class="ctrl">
+                  <div class="ctrl-lab"><span>Conversation rate</span><b id="wiConvLab">20%</b></div>
+                  <input type="range" min="5" max="60" step="1" value="20" id="wiConv" aria-label="Conversation rate">
+                </div>
+                <div class="ctrl">
+                  <div class="ctrl-lab"><span>Conversion to deal</span><b id="wiCvrLab">5%</b></div>
+                  <input type="range" min="1" max="25" step="1" value="5" id="wiCvr" aria-label="Conversion to deal">
+                </div>
+                <div class="ctrl">
+                  <div class="ctrl-lab"><span>Average deal size</span><b id="wiDealLab">—</b></div>
+                  <input type="range" min="500" max="25000" step="500" value="2000" id="wiDeal" aria-label="Average deal size">
+                </div>
+                <div class="core-legend" style="margin-top:18px">
+                  <span class="pill cy" id="wiDeals">— deals / mo</span>
+                  <span class="pill" id="wiPipeline">— pipeline</span>
+                </div>
+              </div>
+
+              <div class="panel-x pad">
+                <div class="os-h"><div><h3>Projected revenue</h3><p>vs current baseline</p></div></div>
+                <div class="sim-out">
+                  <div class="tiny">Monthly revenue</div>
+                  <div class="v" id="wiOut">—</div>
+                  <div class="tiny" style="margin-top:10px" id="wiDelta">Baseline · no change yet</div>
+                </div>
+                <div class="sim-bar">
+                  <div class="row"><span class="tiny">Baseline</span><span class="bar bg"><i id="wiBarBase" style="width:100%"></i></span><span class="tiny" id="wiBaseVal">—</span></div>
+                  <div class="row"><span class="tiny">Scenario</span><span class="bar"><i id="wiBarNew" style="width:100%"></i></span><span class="tiny" id="wiNewVal">—</span></div>
+                  <div class="row"><span class="tiny">Annualised</span><span class="bar ok"><i id="wiBarAnnual" style="width:100%"></i></span><span class="tiny" id="wiAnnualVal">—</span></div>
+                </div>
+                <div class="core-legend" style="margin-top:16px">
+                  <button class="btn btn-sm btn-primary magnet" data-cursor="button" id="wiApply">Apply to forecast</button>
+                  <button class="btn btn-sm btn-ghost" data-cursor="button" id="wiReset">Reset</button>
+                </div>
+                <p class="tiny" style="margin-top:14px;line-height:1.7">
+                  Scenarios only. Applying a scenario updates the forecast view and records a decision in the audit log —
+                  it never changes live agent behaviour.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- coach -->
+          <div class="subpane" data-subpane="coach">
+            <div class="coach" style="margin-top:14px" id="coachList"></div>
+            <div class="panel-x" style="margin-top:14px">
+              <div class="os-h"><div><h3>Recommended plan for next week</h3><p>generated from the four insights above</p></div></div>
+              <div class="next-list" id="coachPlan"></div>
+            </div>
+          </div>
+        </section>

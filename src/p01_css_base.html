@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<!--HEAD:META-->
+<script>
+/* Runs before first paint: no flash of the wrong theme.
+   Order: an explicit choice the visitor made → the operating system → dark. */
+(function () {
+  var d = document.documentElement;
+  d.classList.remove('no-js');
+  var stored = null;
+  try { stored = localStorage.getItem('rp.theme'); } catch (e) {}
+  var sys = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  var theme = (stored === 'light' || stored === 'dark') ? stored : sys;
+  d.setAttribute('data-theme', theme);
+  d.setAttribute('data-theme-source', stored ? 'choice' : 'system');
+})();
+</script>
+<style>
+/* ============================================================
+   REVENUEPILOT — MOTION SYSTEM / DESIGN TOKENS
+   Direction: Linear x Stripe x Vercel x cinematic AI fintech
+   ============================================================ */
+:root{
+  color-scheme:dark;
+
+  /* ------------------------------------------------------------
+     PALETTE — a standard, professional system:
+     slate surfaces + one primary blue + cyan/violet accents.
+     Every surface, line and tint is a token, so the light theme is a
+     value swap rather than a second stylesheet.
+     ------------------------------------------------------------ */
+  --bg:#0b1220;
+  --bg-1:#0f1729;
+  --bg-2:#141f36;
+  --surface:#111a2b;
+  --glass:var(--t-28);
+  --glass-2:var(--t-52);
+  --glass-3:var(--t-85);
+  --line:var(--t-72);
+  --line-2:var(--t-130);
+  --line-3:var(--t-220);
+
+  /* ink */
+  --tx:#e9eefb;
+  --tx-2:#a8b6cd;
+  --tx-3:#6f7f99;
+  --tx-4:#4d5a72;
+
+  /* accent */
+  --cy:#22d3ee;
+  --cy-d:#0891b2;
+  --bl:#4f7cff;
+  --bl-d:#2557e8;
+  --vi:#8b5cf6;
+  --ok:#34d399;
+  --amb:#fbbf24;
+  --rose:#fb7185;
+
+  --grad-accent:linear-gradient(100deg,var(--cy),var(--bl) 48%,var(--vi));
+  --grad-text:linear-gradient(96deg,#eaf5ff 0%,#9fe6ff 30%,#8fb0ff 66%,#c0b0ff 100%);
+
+  /* tints: one alpha scale (46 steps), used for every translucent
+     surface and hairline; flipped to an ink tint in the light theme. */
+  --t-3:rgba(255,255,255,.003);
+  --t-4:rgba(255,255,255,.004);
+  --t-6:rgba(255,255,255,.006);
+  --t-7:rgba(255,255,255,.007);
+  --t-8:rgba(255,255,255,.008);
+  --t-10:rgba(255,255,255,.01);
+  --t-12:rgba(255,255,255,.012);
+  --t-14:rgba(255,255,255,.014);
+  --t-16:rgba(255,255,255,.016);
+  --t-18:rgba(255,255,255,.018);
+  --t-20:rgba(255,255,255,.02);
+  --t-26:rgba(255,255,255,.026);
+  --t-28:rgba(255,255,255,.028);
+  --t-30:rgba(255,255,255,.03);
+  --t-32:rgba(255,255,255,.032);
+  --t-35:rgba(255,255,255,.035);
+  --t-36:rgba(255,255,255,.036);
+  --t-40:rgba(255,255,255,.04);
+  --t-42:rgba(255,255,255,.042);
+  --t-45:rgba(255,255,255,.045);
+  --t-48:rgba(255,255,255,.048);
+  --t-50:rgba(255,255,255,.05);
+  --t-52:rgba(255,255,255,.052);
+  --t-55:rgba(255,255,255,.055);
+  --t-56:rgba(255,255,255,.056);
+  --t-60:rgba(255,255,255,.06);
+  --t-70:rgba(255,255,255,.07);
+  --t-72:rgba(255,255,255,.072);
+  --t-80:rgba(255,255,255,.08);
+  --t-85:rgba(255,255,255,.085);
+  --t-90:rgba(255,255,255,.09);
+  --t-100:rgba(255,255,255,.1);
+  --t-120:rgba(255,255,255,.12);
+  --t-130:rgba(255,255,255,.13);
+  --t-140:rgba(255,255,255,.14);
+  --t-160:rgba(255,255,255,.16);
+  --t-200:rgba(255,255,255,.2);
+  --t-220:rgba(255,255,255,.22);
+  --t-240:rgba(255,255,255,.24);
+  --t-300:rgba(255,255,255,.3);
+  --t-320:rgba(255,255,255,.32);
+  --t-340:rgba(255,255,255,.34);
+  --t-400:rgba(255,255,255,.4);
+  --t-500:rgba(255,255,255,.5);
+  --t-550:rgba(255,255,255,.55);
+  --t-620:rgba(255,255,255,.62);
+
+  /* scrims and shadows */
+  --scrim-0:rgba(11,18,32,0);
+  --scrim-50:rgba(11,18,32,.5);
+  --scrim-72:rgba(11,18,32,.72);
+  --scrim-75:rgba(11,18,32,.75);
+  --scrim-86:rgba(11,18,32,.86);
+  --scrim-94:rgba(11,18,32,.94);
+  --scrim-96:rgba(11,18,32,.96);
+  --white:#ffffff;
+
+  /* geometry */
+  --r-xs:8px; --r-sm:11px; --r:16px; --r-lg:22px; --r-xl:30px;
+  --max:1240px;
+  --gut:clamp(20px,4vw,40px);
+
+  /* motion — durations per motion rule sheet */
+  --d-fast:180ms;     /* buttons */
+  --d-base:340ms;     /* cards */
+  --d-slow:520ms;     /* panels */
+  --d-cine:900ms;     /* hero */
+
+  /* easing — expo / power curves, never linear */
+  --e-out:cubic-bezier(.16,1,.3,1);
+  --e-out-2:cubic-bezier(.22,1,.36,1);
+  --e-in-out:cubic-bezier(.65,.02,.28,1);
+  --e-soft:cubic-bezier(.4,.14,.3,1);
+  --e-spring:cubic-bezier(.34,1.42,.44,1);
+
+  /* atmosphere */
+  --shadow-lg:0 40px 90px -30px rgba(4,8,20,.75), 0 8px 30px -12px rgba(4,8,20,.5);
+  --shadow-glow:0 0 0 1px rgba(34,211,238,.16), 0 14px 50px -14px rgba(79,124,255,.42);
+
+  --font:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+/* ------------------------------------------------------------
+   LIGHT THEME — the same layout, a standard light surface stack.
+   Applied with [data-theme="light"] on <html>, which the theme toggle
+   and the pre-paint script in the head set from the stored choice or
+   the operating system preference.
+   ------------------------------------------------------------ */
+:root[data-theme="light"]{
+  color-scheme:light;
+
+  --bg:#f6f8fc;
+  --bg-1:#ffffff;
+  --bg-2:#eef2f9;
+  --surface:#ffffff;
+  --glass:rgba(15,27,45,.022);
+  --glass-2:rgba(15,27,45,.04);
+  --glass-3:rgba(15,27,45,.065);
+  --line:rgba(15,27,45,.1);
+  --line-2:rgba(15,27,45,.16);
+  --line-3:rgba(15,27,45,.26);
+
+  --tx:#101b2d;
+  --tx-2:#475569;
+  --tx-3:#6b7a90;
+  --tx-4:#8a97ab;
+
+  --cy:#0e7490;
+  --cy-d:#155e75;
+  --bl:#2557e8;
+  --bl-d:#1d47c4;
+  --vi:#6d28d9;
+  --ok:#0f9d6e;
+  --amb:#b45309;
+  --rose:#e11d48;
+
+  --grad-accent:linear-gradient(100deg,#0e7490,#2557e8 48%,#6d28d9);
+  --grad-text:linear-gradient(96deg,#0b3b8f 0%,#0e7490 42%,#4338ca 78%,#6d28d9 100%);
+
+  --t-3:rgba(15,27,45,.003);
+  --t-4:rgba(15,27,45,.004);
+  --t-6:rgba(15,27,45,.006);
+  --t-7:rgba(15,27,45,.007);
+  --t-8:rgba(15,27,45,.008);
+  --t-10:rgba(15,27,45,.01);
+  --t-12:rgba(15,27,45,.012);
+  --t-14:rgba(15,27,45,.014);
+  --t-16:rgba(15,27,45,.016);
+  --t-18:rgba(15,27,45,.018);
+  --t-20:rgba(15,27,45,.02);
+  --t-26:rgba(15,27,45,.026);
+  --t-28:rgba(15,27,45,.028);
+  --t-30:rgba(15,27,45,.03);
+  --t-32:rgba(15,27,45,.032);
+  --t-35:rgba(15,27,45,.035);
+  --t-36:rgba(15,27,45,.036);
+  --t-40:rgba(15,27,45,.04);
+  --t-42:rgba(15,27,45,.042);
+  --t-45:rgba(15,27,45,.045);
+  --t-48:rgba(15,27,45,.048);
+  --t-50:rgba(15,27,45,.05);
+  --t-52:rgba(15,27,45,.052);
+  --t-55:rgba(15,27,45,.055);
+  --t-56:rgba(15,27,45,.056);
+  --t-60:rgba(15,27,45,.06);
+  --t-70:rgba(15,27,45,.07);
+  --t-72:rgba(15,27,45,.072);
+  --t-80:rgba(15,27,45,.08);
+  --t-85:rgba(15,27,45,.085);
+  --t-90:rgba(15,27,45,.09);
+  --t-100:rgba(15,27,45,.1);
+  --t-120:rgba(15,27,45,.12);
+  --t-130:rgba(15,27,45,.13);
+  --t-140:rgba(15,27,45,.14);
+  --t-160:rgba(15,27,45,.16);
+  --t-200:rgba(15,27,45,.2);
+  --t-220:rgba(15,27,45,.22);
+  --t-240:rgba(15,27,45,.24);
+  --t-300:rgba(15,27,45,.3);
+  --t-320:rgba(15,27,45,.32);
+  --t-340:rgba(15,27,45,.34);
+  --t-400:rgba(15,27,45,.4);
+  --t-500:rgba(15,27,45,.5);
+  --t-550:rgba(15,27,45,.55);
+  --t-620:rgba(15,27,45,.62);
+
+  --scrim-0:rgba(246,248,252,0);
+  --scrim-50:rgba(246,248,252,.5);
+  --scrim-72:rgba(246,248,252,.72);
+  --scrim-75:rgba(246,248,252,.75);
+  --scrim-86:rgba(246,248,252,.86);
+  --scrim-94:rgba(246,248,252,.94);
+  --scrim-96:rgba(246,248,252,.96);
+
+  --shadow-lg:0 30px 70px -34px rgba(15,27,45,.28), 0 6px 22px -12px rgba(15,27,45,.18);
+  --shadow-glow:0 0 0 1px rgba(37,87,232,.18), 0 14px 44px -18px rgba(37,87,232,.3);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--tx);
+  font-family:var(--font);
+  font-size:16px;
+  line-height:1.6;
+  letter-spacing:-.011em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:clip;          /* the page never scrolls sideways; clip (not hidden) keeps position:sticky alive */
+  font-feature-settings:"ss01" 1,"cv01" 1,"tnum" 0;
+}
+body.locked{overflow:hidden}
+img,svg,canvas{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+::selection{background:rgba(90,231,255,.24);color:#fff}
+:focus-visible{outline:1.5px solid var(--cy);outline-offset:3px;border-radius:6px}
+hr{border:0;border-top:1px solid var(--line);margin:0}
+
+/* ---------- layout primitives ---------- */
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.sec{position:relative;padding-block:clamp(88px,11vw,168px)}
+.sec-head{max-width:720px}
+.kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--tx-3);display:flex;align-items:center;gap:10px;
+}
+.kicker::before{content:"";width:22px;height:1px;background:linear-gradient(90deg,var(--cy),transparent)}
+.h2{
+  font-size:clamp(30px,4.6vw,58px);line-height:1.02;letter-spacing:-.038em;font-weight:640;
+  margin-top:18px;text-wrap:balance;
+}
+.sub{color:var(--tx-2);font-size:clamp(15px,1.35vw,17.5px);line-height:1.62;margin-top:20px;max-width:58ch}
+.muted{color:var(--tx-3)}
+.accent{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:var(--mono)}
+.hair{height:1px;background:linear-gradient(90deg,transparent,var(--line-2) 18%,var(--line-2) 82%,transparent)}
+
+/* ---------- atmosphere: grid + light ---------- */
+.bg-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.9}
+.grid-fx{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(to right,var(--t-45) 1px,transparent 1px),
+    linear-gradient(to bottom,var(--t-45) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(120% 88% at 50% 0%,#000 0%,rgba(0,0,0,.42) 46%,transparent 82%);
+  -webkit-mask-image:radial-gradient(120% 88% at 50% 0%,#000 0%,rgba(0,0,0,.42) 46%,transparent 82%);
+  animation:gridDrift 60s linear infinite;
+}
+@keyframes gridDrift{from{background-position:0 0,0 0}to{background-position:72px 144px,144px 72px}}
+.atmo{
+  position:fixed;z-index:0;pointer-events:none;border-radius:50%;
+  filter:blur(80px);opacity:.5;will-change:transform;
+}
+.atmo-1{width:62vw;height:62vw;left:-14vw;top:-24vw;background:radial-gradient(circle at 50% 50%,rgba(63,124,255,.28),transparent 62%)}
+.atmo-2{width:52vw;height:52vw;right:-16vw;top:6vw;background:radial-gradient(circle at 50% 50%,rgba(138,107,255,.22),transparent 64%)}
+.atmo-3{width:46vw;height:46vw;left:22vw;bottom:-22vw;background:radial-gradient(circle at 50% 50%,rgba(90,231,255,.16),transparent 66%)}
+.grain{
+  position:fixed;inset:-120%;z-index:1;pointer-events:none;opacity:.028;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 8s steps(6) infinite;
+}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-2%,1%)}40%{transform:translate(1%,-2%)}60%{transform:translate(-1%,2%)}80%{transform:translate(2%,-1%)}100%{transform:translate(0,0)}}
+main,footer,header{position:relative;z-index:2}
+
+/* ---------- reveal system (staggered, scroll-triggered) ---------- */
+[data-reveal]{
+  opacity:0;
+  transform:translate3d(0,var(--ry,22px),0) scale(var(--rs,1));
+  filter:blur(var(--rb,6px));
+  transition:opacity var(--d-slow) var(--e-out),transform 640ms var(--e-out),filter 640ms var(--e-out);
+  transition-delay:calc(var(--i,0) * 78ms + var(--delay,0ms));
+}
+[data-reveal].in{opacity:1;transform:none;filter:blur(0)}
+[data-reveal="mask"]{clip-path:inset(0 0 100% 0);opacity:1;filter:none;transform:none;transition:clip-path 900ms var(--e-out)}
+[data-reveal="mask"].in{clip-path:inset(0 0 -8% 0)}
+
+/* ---------- cinematic headline reveal ---------- */
+.cine .line{display:block;overflow:hidden;padding-bottom:.04em}
+.cine .line-in{
+  display:block;transform:translate3d(0,108%,0) skewY(4deg);filter:blur(10px);opacity:.2;
+  transition:transform 1150ms var(--e-out),filter 1000ms var(--e-out),opacity 700ms var(--e-out);
+  transition-delay:calc(var(--i,0) * 130ms + var(--delay,0ms));
+  will-change:transform,filter;
+}
+.cine.in .line-in{transform:none;filter:blur(0);opacity:1}
+.boot .cine .line-in,.cine.instant .line-in{transition:none}
+
+/* ---------- buttons: magnetic ---------- */
+.btn{
+  --bh:.04;
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  height:48px;padding:0 22px;border-radius:var(--r-sm);
+  font-size:14.5px;font-weight:530;letter-spacing:-.012em;white-space:nowrap;
+  border:1px solid var(--line-2);background:var(--glass);color:var(--tx);
+  transition:transform var(--d-fast) var(--e-out),background var(--d-fast) ease,border-color var(--d-fast) ease,box-shadow var(--d-base) var(--e-out);
+  will-change:transform;
+}
+.btn:hover{background:var(--glass-2);border-color:var(--line-3)}
+.btn .ar{transition:transform var(--d-base) var(--e-out);display:inline-flex}
+.btn:hover .ar{transform:translateX(4px)}
+.btn:active{transform:scale(.985)}
+.btn-primary{
+  color:#031018;font-weight:600;border-color:transparent;
+  background:linear-gradient(140deg,#bff4ff,#5ae7ff 26%,#3f7cff 72%,#8a6bff);
+  box-shadow:0 12px 40px -14px rgba(63,124,255,.7),0 0 0 1px rgba(90,231,255,.35) inset;
+  overflow:hidden;
+}
+.btn-primary::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(105deg,transparent 26%,var(--t-620) 48%,transparent 68%);
+  transform:translateX(-130%);transition:transform 780ms var(--e-out);pointer-events:none;
+}
+.btn-primary:hover::after{transform:translateX(130%)}
+.btn-primary:hover{box-shadow:0 20px 60px -16px rgba(90,231,255,.62),0 0 0 1px var(--t-400) inset}
+.btn-lg{height:56px;padding:0 28px;font-size:15.5px;border-radius:14px}
+.btn-sm{height:38px;padding:0 15px;font-size:13.5px;border-radius:10px}
+.btn-ghost{background:transparent;border-color:var(--line-2);color:var(--tx-2)}
+.btn-ghost:hover{color:var(--tx);border-color:var(--line-3);background:var(--glass)}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center;border-radius:10px}
+
+/* ---------- chips / pills ---------- */
+.pill{
+  display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;border-radius:99px;
+  border:1px solid var(--line-2);background:var(--glass);color:var(--tx-2);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+}
+.pill.ok{color:#a9f4d5;border-color:rgba(70,227,164,.34);background:rgba(70,227,164,.08)}
+.pill.cy{color:#bff1ff;border-color:rgba(90,231,255,.32);background:rgba(90,231,255,.07)}
+.pill.vi{color:#cfc4ff;border-color:rgba(138,107,255,.32);background:rgba(138,107,255,.08)}
+.pill.amb{color:#ffdCA8;border-color:rgba(255,180,84,.3);background:rgba(255,180,84,.07)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--cy);box-shadow:0 0 0 0 rgba(90,231,255,.6);animation:pulse 2.4s var(--e-out) infinite}
+.dot.ok{background:var(--ok);box-shadow:0 0 0 0 rgba(70,227,164,.6)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,231,255,.5)}70%{box-shadow:0 0 0 9px rgba(90,231,255,0)}100%{box-shadow:0 0 0 0 rgba(90,231,255,0)}}
+
+/* ---------- surfaces ---------- */
+.glass{
+  background:linear-gradient(168deg,var(--t-52),var(--t-14) 42%,var(--t-6));
+  border:1px solid var(--line);border-radius:var(--r);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+}
+.glass-2{background:linear-gradient(168deg,var(--t-70),var(--t-20));border:1px solid var(--line-2)}
+.inset-hi{box-shadow:0 1px 0 0 var(--t-60) inset,var(--shadow-lg)}
+.nums{font-variant-numeric:tabular-nums}
+</style>

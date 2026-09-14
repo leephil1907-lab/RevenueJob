@@ -1,0 +1,241 @@
+<style>
+/* ============================================================
+   HERO ORB — 5-stage revenue engine
+   WebGL (scoped, lazy) → 2D lite renderer → static SVG fallback
+   Communicates: Prospects → Intelligence → Conversations →
+                 Opportunities → Revenue
+   ============================================================ */
+.orb-stage{
+  position:relative;width:100%;aspect-ratio:1/1;max-height:620px;min-height:380px;
+  border-radius:var(--r-xl);overflow:hidden;isolation:isolate;
+  --orb-ink:#e9eefb; --orb-dim:#8ea0bd; --orb-line:rgba(255,255,255,.12); --orb-chip:rgba(6,11,22,.62);
+  background:radial-gradient(120% 100% at 50% 12%,rgba(34,211,238,.14),rgba(139,92,246,.1) 44%,transparent 76%),#080e1b;
+  border:1px solid var(--orb-line);
+  box-shadow:0 26px 70px -34px rgba(6,12,28,.6);
+}
+/* inside the stage, the light theme keeps the same light-on-dark tokens */
+.orb-stage .orb-badge,.orb-stage .orb-ticker,.orb-stage .orb-label{color:var(--orb-ink)}
+.orb-stage .orb-badge,.orb-stage .orb-ticker{background:var(--orb-chip)}
+.orb-stage .orb-label b{color:var(--orb-ink)}
+.orb-stage::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(var(--t-50) 1px,transparent 1px);
+  background-size:34px 34px;
+  mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent 78%);
+  -webkit-mask-image:radial-gradient(70% 70% at 50% 50%,#000,transparent 78%);
+  opacity:.5;
+}
+.orb-mount{position:absolute;inset:0}
+.orb-mount canvas{width:100%!important;height:100%!important;display:block;position:absolute;inset:0}
+/* the lite (2D) canvas sits under the WebGL canvas; only one is visible */
+.orb-mount canvas.lite{position:absolute;inset:0}
+
+/* ---------- tier 0: inline SVG/CSS poster ----------
+   Visible with JavaScript disabled, as the reduced-motion state, and as the
+   outermost fallback if neither WebGL nor canvas 2D is available. It is the
+   same five-stage model, drawn statically — so the hero is never blank. */
+.orb-poster{
+  position:absolute;inset:0;z-index:1;width:100%;height:100%;
+  opacity:1;transition:opacity .7s ease;
+}
+.orb-poster .pr-ring{fill:none;stroke-width:1}
+.orb-poster .pr-dot{opacity:.5}
+.orb-poster .pr-link{stroke:rgba(90,231,255,.22);stroke-width:.8;fill:none}
+.orb-poster .pr-core-glow{opacity:.75}
+.orb-poster .pr-label{
+  font-family:var(--mono);font-size:8.5px;letter-spacing:1.3px;fill:rgba(160,180,200,.75);
+  text-transform:uppercase;
+}
+/* once any live canvas mounts, the poster retires */
+.orb-stage.orb-live .orb-poster{opacity:0}
+html.reduced .orb-mount{display:none}
+html.no-js .orb-stage .orb-labels{opacity:.85}
+
+/* renderer badge: tells the truth about what you're looking at */
+.orb-badge{
+  position:absolute;top:14px;right:14px;z-index:4;display:inline-flex;align-items:center;gap:7px;
+  padding:6px 10px;border-radius:99px;border:1px solid rgba(255,255,255,.16);background:rgba(6,11,22,.62);
+  backdrop-filter:blur(8px);font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#c7d4ea;
+}
+.orb-badge i{width:5px;height:5px;border-radius:50%;background:var(--cy);animation:pulse 2.2s var(--e-out) infinite}
+.orb-badge.lite i{background:var(--tx-4);animation:none}
+
+/* the five pipeline stages */
+.orb-labels{position:absolute;inset:0;z-index:3;pointer-events:none}
+.orb-label{
+  position:absolute;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+  padding:5px 9px;border-radius:99px;border:1px solid var(--line-2);background:rgba(3,5,9,.62);
+  backdrop-filter:blur(6px);font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--tx-3);
+  transition:color .5s var(--e-out),border-color .5s var(--e-out),background .5s var(--e-out),opacity .5s ease;
+  will-change:transform,left,top;
+}
+.orb-label b{font-weight:500;color:var(--tx-4);font-size:8.5px}
+.orb-label .n{
+  width:5px;height:5px;border-radius:50%;background:var(--tx-4);flex:none;
+  transition:background .5s ease,box-shadow .5s ease;
+}
+.orb-label.on{color:#dff8ff;border-color:rgba(90,231,255,.5);background:rgba(6,16,24,.8)}
+.orb-label.on .n{background:var(--cy);box-shadow:0 0 10px rgba(90,231,255,.9)}
+.orb-label.rev.on{color:#c6f7e4;border-color:rgba(70,227,164,.5)}
+.orb-label.rev.on .n{background:var(--ok);box-shadow:0 0 10px rgba(70,227,164,.9)}
+/* static placement while the lite renderer or fallback is active */
+.orb-stage.lite .orb-label{transition:color .5s ease,border-color .5s ease}
+.orb-stage.lite .orb-label[data-stage="0"]{left:6%;top:52%}
+.orb-stage.lite .orb-label[data-stage="1"]{left:22%;top:30%}
+.orb-stage.lite .orb-label[data-stage="2"]{right:8%;top:34%}
+.orb-stage.lite .orb-label[data-stage="3"]{right:12%;bottom:22%}
+.orb-stage.lite .orb-label[data-stage="4"]{left:26%;bottom:14%}
+
+/* micro ticker under the orb: the outcome, stated honestly */
+.orb-ticker{
+  position:absolute;left:14px;right:14px;bottom:12px;z-index:4;
+  display:flex;align-items:center;gap:12px;padding:10px 13px;border-radius:14px;
+  border:1px solid var(--line);background:rgba(2,4,7,.62);backdrop-filter:blur(10px);
+}
+.orb-ticker .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx-4)}
+.orb-ticker .v{font-size:19px;font-weight:620;letter-spacing:-.04em;font-variant-numeric:tabular-nums;
+  background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.orb-ticker .st{margin-left:auto;display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--tx-4)}
+.orb-ticker .st b{color:var(--cy);font-weight:500}
+.orb-flow{display:flex;align-items:center;gap:5px;margin-top:2px}
+.orb-flow i{width:16px;height:1.5px;border-radius:2px;background:var(--t-140);overflow:hidden;position:relative}
+.orb-flow i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--cy),transparent);transform:translateX(-100%);animation:orbFlow 2.6s linear infinite}
+.orb-flow i:nth-child(2)::after{animation-delay:.5s}
+.orb-flow i:nth-child(3)::after{animation-delay:1s}
+.orb-flow i:nth-child(4)::after{animation-delay:1.5s}
+@keyframes orbFlow{to{transform:translateX(100%)}}
+
+/* hero copy block keeps its own rhythm */
+.hero-copy{max-width:640px}
+.hero-note{
+  display:flex;align-items:center;gap:9px;margin-top:14px;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--tx-4);
+}
+.hero-note svg{width:11px;height:11px;stroke:var(--tx-4);fill:none;stroke-width:1.8;flex:none}
+
+/* the live agent console gets its own band beneath the hero */
+.live-band{padding-block:clamp(40px,6vw,84px)}
+.live-band .sec-head{margin-bottom:clamp(22px,3vw,34px)}
+.live-band .live{max-width:100%}
+
+@media (max-width:1080px){
+  .orb-stage{max-height:none;aspect-ratio:1/.92;margin-top:8px}
+}
+@media (max-width:560px){
+  .orb-stage{aspect-ratio:1/1;min-height:320px}
+  .orb-ticker .st{display:none}
+  .orb-label{font-size:8.5px;padding:4px 7px}
+}
+html.reduced .orb-badge i{animation:none}
+html.reduced .orb-flow i::after{display:none}
+
+
+/* ============================================================
+   PRODUCTION UI: language picker, calculator, empty states
+   ============================================================ */
+.brand-mark{display:grid;place-items:center;width:26px;height:26px;flex:0 0 auto}
+.brand-mark svg{width:100%;height:100%;display:block}
+.brand-word{font-weight:600;letter-spacing:-.01em}
+.brand-word b{font-weight:800}
+
+/* language picker */
+.lang-pick{position:relative}
+.lang-btn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 11px;border-radius:9px;
+  background:var(--glass);border:1px solid var(--line);color:var(--tx-2);font:600 11.5px/1 var(--mono);
+  letter-spacing:.06em;cursor:pointer;transition:border-color var(--d-fast),color var(--d-fast)}
+.lang-btn:hover{border-color:var(--line-3);color:var(--tx)}
+.lang-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:210px;padding:6px;z-index:80;
+  background:rgba(8,11,18,.97);border:1px solid var(--line-2);border-radius:12px;
+  box-shadow:0 24px 60px rgba(0,0,0,.55);backdrop-filter:blur(14px)}
+.lang-menu[hidden]{display:none}
+.lang-item{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:8px;
+  background:none;border:0;color:var(--tx-2);font:500 13px/1 var(--sans,inherit);cursor:pointer;text-align:left}
+.lang-item:hover{background:var(--glass-2);color:var(--tx)}
+.lang-item[aria-selected="true"]{color:var(--tx);background:var(--glass-2)}
+.lang-nat{flex:1}
+.lang-code{font:600 10.5px/1 var(--mono);color:var(--tx-4);letter-spacing:.08em}
+.lang-flag{font:600 9.5px/1 var(--mono);text-transform:uppercase;letter-spacing:.08em;
+  color:#f3c98b;border:1px solid rgba(243,201,139,.3);border-radius:999px;padding:3px 6px}
+.sheet-lang{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.sheet-lang .chip{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--glass);
+  color:var(--tx-2);font:500 12.5px/1 inherit;cursor:pointer}
+
+/* RTL: flip only what needs flipping */
+html.rtl .nav-in,html.rtl .hero-grid{direction:rtl}
+html.rtl .ar{transform:scaleX(-1)}
+
+/* pipeline calculator */
+.calc{display:grid;grid-template-columns:minmax(300px,.86fr) 1.14fr;gap:0;overflow:hidden}
+.calc-inputs{display:grid;gap:10px;padding:20px;border-right:1px solid var(--line);align-content:start}
+.calc-field{display:grid;gap:6px}
+.calc-field label{font:500 11.5px/1.35 var(--mono);letter-spacing:.04em;color:var(--tx-4)}
+.calc-field input{width:100%;height:40px;padding:0 12px;border-radius:9px;background:var(--glass);
+  border:1px solid var(--line);color:var(--tx);font:600 15px/1 var(--mono);letter-spacing:.01em}
+.calc-field input:focus{outline:none;border-color:rgba(90,231,255,.5);box-shadow:0 0 0 3px rgba(90,231,255,.09)}
+.calc-field input.is-empty{color:var(--tx-4)}
+.calc-field input::placeholder{color:var(--tx-4)}
+.calc-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.calc-chain{padding:20px;display:grid;gap:16px;align-content:start}
+.chain{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.chain-step{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.chain-lab{font:500 11.5px/1.4 var(--mono);color:var(--tx-4);letter-spacing:.03em}
+.chain-lab b{color:var(--tx-2)}
+.chain-val{font:600 17px/1 var(--mono);color:var(--tx);font-variant-numeric:tabular-nums}
+.chain-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--glass-2);overflow:hidden}
+.chain-bar i{display:block;height:100%;width:var(--w,0%);border-radius:99px;
+  background:linear-gradient(90deg,var(--cy),#8a6bff);transition:width var(--d-slow) var(--e-out)}
+.calc-results{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.result-card{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--glass)}
+.result-lab{font:500 11px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tx-4)}
+.result-val{margin-top:7px;font:700 24px/1 var(--mono);color:var(--tx);font-variant-numeric:tabular-nums}
+.result-meta{margin-top:6px;font:500 10.5px/1.3 var(--mono);color:var(--tx-4)}
+.calc-note{margin:0;font-size:13.4px;line-height:1.6;color:var(--tx-2);min-height:2.6em}
+.calc-chain[data-state="empty"] .calc-note{color:var(--tx-4)}
+.calc-chain[data-state="ready"] .calc-note{color:var(--tx)}
+.calc-foot{margin:0;font:500 11.5px/1.55 var(--mono);color:var(--tx-4)}
+
+/* empty states inside the console */
+.os-empty{display:grid;gap:10px;justify-items:start;padding:18px;border-radius:12px;
+  border:1px dashed var(--line-2);background:var(--t-14)}
+.os-empty-ic{font-size:18px;color:var(--tx-4);line-height:1}
+.os-empty-tx{margin:0;font-size:13.2px;line-height:1.62;color:var(--tx-3,var(--tx-2));max-width:70ch}
+.os-empty-act{font:600 12.5px/1 inherit;color:var(--cy);text-decoration:none;border-bottom:1px solid rgba(90,231,255,.3)}
+.empty-cell{display:block;padding:16px;color:var(--tx-4);font-size:12.8px;line-height:1.6}
+.tr.row.is-empty{grid-template-columns:1fr}
+.roster-row,.perm-row{display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:baseline;
+  padding:9px 0;border-bottom:1px dashed var(--line)}
+.perm-row{grid-template-columns:170px 150px 1fr auto}
+.roster-role{font-weight:600;font-size:13.2px}
+.roster-job,.perm-note{color:var(--tx-3,var(--tx-2));font-size:12.6px;line-height:1.5}
+.mk-card{padding:16px;border-radius:12px;border:1px solid var(--line);background:var(--glass)}
+.agent-st.idle{color:var(--tx-4)}
+.agent-st.idle::before{background:var(--tx-4)}
+.fleet-dot.idle{background:var(--tx-4)}
+.chn-dot.idle{background:var(--tx-4)}
+
+/* responsive: the calculator becomes one column, the console reflows */
+@media (max-width:1080px){
+  .calc{grid-template-columns:1fr}
+  .calc-inputs{border-right:0;border-bottom:1px solid var(--line)}
+}
+@media (max-width:900px){
+  .nav-links{display:none}
+  .lang-pick{display:none}
+  .roster-row{grid-template-columns:1fr auto;gap:4px}
+  .perm-row{grid-template-columns:1fr;gap:4px}
+  .calc-results{grid-template-columns:1fr}
+  .result-val{font-size:21px}
+}
+@media (max-width:560px){
+  .calc-inputs,.calc-chain{padding:14px}
+  .chain-val{font-size:15px}
+  .result-val{font-size:19px}
+}
+
+/* platform facts */
+.roster,.perms{list-style:none;margin:14px 0 0;padding:0}
+.fact-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:26px}
+.fact{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--glass)}
+.fact b{display:block;font:700 24px/1 var(--mono);color:var(--tx);font-variant-numeric:tabular-nums}
+.fact span{display:block;margin-top:6px;font:500 11.5px/1.35 var(--mono);color:var(--tx-4);letter-spacing:.04em}
+</style>

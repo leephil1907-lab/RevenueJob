@@ -1,0 +1,629 @@
+<!-- ================= AGENT CORE ================= -->
+<section class="sec" id="core">
+  <div class="wrap core-wrap">
+    <div>
+      <div class="kicker" data-reveal>Signature visual · agent core</div>
+      <h2 class="h2" data-reveal style="--i:1">Every decision, <span class="accent">visible</span>.</h2>
+      <p class="sub" data-reveal style="--i:2">
+        The Agent Core is the same graph your team watches in production. Each node executes in order,
+        each edge lights when data moves, and every branch resolves to an outcome you can audit —
+        qualified or nurture, converted or followed up.
+      </p>
+      <div class="core-legend" data-reveal style="--i:3">
+        <span class="pill cy"><span class="dot"></span> Executing</span>
+        <span class="pill ok">Resolved</span>
+        <span class="pill">1.9s median latency</span>
+        <span class="pill">Fully auditable</span>
+      </div>
+      <div data-reveal style="margin-top:26px;--i:4">
+        <button class="btn magnet" data-scroll data-target="#console" data-cursor="explore" data-cursor-label="OPEN">
+          See it running in the console <span class="ar">→</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="core-stage" data-reveal id="coreStage" style="--rs:.985;--ry:26px">
+      <svg class="core-svg" viewBox="0 0 620 476" role="img" aria-label="Agent execution graph: research, analyze, decide, then qualify to convert, or nurture to follow up — all resolving to revenue">
+        <!-- edges (drawn before nodes, pulses on top) -->
+        <path class="edge" id="e1" d="M310 62 V106"/>
+        <path class="edge" id="e2" d="M310 148 V190"/>
+        <path class="edge" id="e3" d="M310 232 V262 H160 V286"/>
+        <path class="edge" id="e4" d="M310 232 V262 H460 V286"/>
+        <path class="edge" id="e5" d="M160 336 V416 H310 V432"/>
+        <path class="edge" id="e6" d="M310 416 V432"/>
+        <path class="edge" id="e7" d="M460 336 V358 H473 V376"/>
+        <!-- nodes -->
+        <g class="node" data-node="0">
+          <rect class="node-box" x="238" y="20" width="144" height="42" rx="11"/>
+          <text class="node-t" x="310" y="37">Research</text>
+          <text class="node-st" x="310" y="51">12 sources / acct</text>
+        </g>
+        <g class="node" data-node="1">
+          <rect class="node-box" x="238" y="106" width="144" height="42" rx="11"/>
+          <text class="node-t" x="310" y="123">Analyze</text>
+          <text class="node-st" x="310" y="137">ICP + intent model</text>
+        </g>
+        <g class="node" data-node="2">
+          <rect class="node-box" x="238" y="190" width="144" height="42" rx="11"/>
+          <text class="node-t" x="310" y="207">Decide</text>
+          <text class="node-st" x="310" y="221">route by fit</text>
+        </g>
+        <g class="node" data-node="3">
+          <rect class="node-box" x="88" y="286" width="144" height="50" rx="11"/>
+          <text class="node-t" x="160" y="305">Qualified</text>
+          <text class="node-st" x="160" y="319">score ≥ 80</text>
+        </g>
+        <g class="node" data-node="4">
+          <rect class="node-box" x="388" y="286" width="144" height="50" rx="11"/>
+          <text class="node-t" x="460" y="305">Nurture</text>
+          <text class="node-st" x="460" y="319">score &lt; 80</text>
+        </g>
+        <g class="node" data-node="5">
+          <rect class="node-box" x="238" y="370" width="144" height="46" rx="11"/>
+          <text class="node-t" x="310" y="387">Convert</text>
+          <text class="node-st" x="310" y="401">booked + handoff</text>
+        </g>
+        <g class="node" data-node="6">
+          <rect class="node-box" x="418" y="376" width="110" height="34" rx="10"/>
+          <text class="node-t" x="473" y="393">Follow up</text>
+        </g>
+        <!-- revenue terminal -->
+        <g class="node term" data-node="7">
+          <rect class="node-box" x="212" y="432" width="196" height="30" rx="10"/>
+          <text class="node-t" x="310" y="447">Revenue</text>
+        </g>
+        <!-- travelling data pulses -->
+        <circle class="pulse" id="pulseA" r="3.4" opacity="0"/>
+        <circle class="pulse" id="pulseB" r="3.4" opacity="0" fill="#a78bfa"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONSOLE PREVIEW: functional miniature app ================= -->
+<section class="sec" id="console" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>Not a screenshot</div>
+      <h2 class="h2" data-reveal style="--i:1">Click things. <span class="accent">It's real.</span></h2>
+      <p class="sub" data-reveal style="--i:2">
+        The marketing site ships a working miniature of the product. Same components, same motion
+        language, same data contracts — so nothing changes when you log in.
+      </p>
+    </div>
+
+    <div class="preview" data-reveal style="margin-top:clamp(28px,4vw,44px);--rs:.99;--ry:30px">
+      <div class="preview-top">
+        <div class="tabs" role="tablist" aria-label="Console preview">
+          <button class="tab on" role="tab" aria-selected="true" data-pane="prospects" data-cursor="button">Prospects</button>
+          <button class="tab" role="tab" aria-selected="false" data-pane="agent" data-cursor="button">Agent</button>
+          <button class="tab" role="tab" aria-selected="false" data-pane="campaign" data-cursor="button">Campaign</button>
+          <button class="tab" role="tab" aria-selected="false" data-pane="revenue" data-cursor="button">Revenue</button>
+        </div>
+        <div class="pv-meta">
+          <span class="pill cy"><span class="dot"></span> Live sync</span>
+          <span class="mono muted" style="font-size:10px" id="pvClock">—</span>
+          <button class="btn btn-sm btn-ghost" data-route="console" data-cursor="button">Open full console</button>
+        </div>
+      </div>
+
+      <div class="panelwrap" id="panelwrap">
+        <!-- PROSPECTS -->
+        <div class="panel-pane on" data-pane-body="prospects" role="tabpanel">
+          <div class="dash">
+            <div class="kpi">
+              <div class="kpi-lab">Prospects in your model</div>
+              <div class="kpi-num nums" data-mirror="prospects">—</div>
+              <div class="kpi-delta muted">from the calculator</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Qualified</div>
+              <div class="kpi-num nums" data-mirror="qualified">—</div>
+              <div class="kpi-delta muted">your qualification rate</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Meetings</div>
+              <div class="kpi-num nums" data-mirror="meetings">—</div>
+              <div class="kpi-delta muted">your meeting rate</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Expected revenue</div>
+              <div class="kpi-num nums" data-mirror="expected">—</div>
+              <div class="kpi-delta muted">deals × deal size</div>
+            </div>
+          </div>
+          <div class="table" id="prospectTable">
+            <div class="tr head"><span>Account</span><span>Fit</span><span>Stage</span><span class="hide-s">Owner</span><span class="hide-s">Score</span></div>
+          </div>
+        </div>
+
+        <!-- AGENT -->
+        <div class="panel-pane" data-pane-body="agent" role="tabpanel">
+          <div class="two" style="margin-top:0">
+            <div class="box">
+              <h5>Agent status · [Owner]</h5>
+              <div class="big" id="agentStatus">Not connected</div>
+              <div class="bar" style="margin-top:14px"><i style="width:0%"></i></div>
+              <div class="logstream" id="agentLog"></div>
+            </div>
+            <div class="box">
+              <h5>Today</h5>
+              <div class="big nums">—</div>
+              <p class="muted" style="font-size:12.6px;margin-top:6px">Agent actions executed (appears once an agent runs in your workspace)</p>
+              <div class="hair" style="margin:16px 0"></div>
+              <h5>Autonomy</h5>
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Draft only</span><b id="agentSliderTier">Approval required</b></div>
+                <input type="range" min="0" max="100" value="50" id="agentSlider" aria-label="Autonomy level" data-label="agentSlider">
+                <div class="ctrl-val" id="agentSliderVal">Level 2 · every outbound action needs a human decision</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAMPAIGN -->
+        <div class="panel-pane" data-pane-body="campaign" role="tabpanel">
+          <div class="dash" style="grid-template-columns:repeat(3,1fr)">
+            <div class="kpi">
+              <div class="kpi-lab">Sequences active</div>
+              <div class="kpi-num nums">—</div>
+              <div class="kpi-delta muted">none yet</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Meetings sourced</div>
+              <div class="kpi-num nums" data-mirror="meetings">—</div>
+              <div class="kpi-delta muted">from your model</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Expected revenue</div>
+              <div class="kpi-num nums" data-mirror="expected">—</div>
+              <div class="kpi-delta muted">from your model</div>
+            </div>
+          </div>
+          <div class="two">
+            <div class="box">
+              <h5>Sequence health</h5>
+              <div class="logstream" id="campaignBars" style="max-height:none"></div>
+            </div>
+            <div class="box">
+              <h5>Next best action</h5>
+              <p style="font-size:13.6px;line-height:1.62;color:var(--tx-2);margin-top:12px">
+                Recommendations appear here once a sequence is running: which segment to shift volume to,
+                which step is leaking, and what the agent would change — each with the numbers behind it.
+                We do not show a projection for a workspace that does not exist.
+              </p>
+              <button class="btn btn-sm magnet" style="margin-top:18px" data-scroll data-target="#live" data-cursor="button">Model your own numbers <span class="ar">→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REVENUE -->
+        <div class="panel-pane" data-pane-body="revenue" role="tabpanel">
+          <div class="dash" style="grid-template-columns:repeat(3,1fr)">
+            <div class="kpi">
+              <div class="kpi-label-row kpi-lab">Expected revenue</div>
+              <div class="kpi-num nums" data-mirror="expected">—</div>
+              <div class="kpi-delta muted">your model, per month</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Weighted pipeline</div>
+              <div class="kpi-num nums" data-mirror="pipeline">—</div>
+              <div class="kpi-delta muted">expected ÷ close rate</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-lab">Attribution</div>
+              <div class="kpi-num nums" style="font-size:20px">Not connected</div>
+              <div class="kpi-delta muted">no attribution without touchpoint data</div>
+            </div>
+          </div>
+          <div class="box" style="margin-top:14px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+              <h5>Revenue over time · from your model</h5>
+              <div class="legend"><span><i class="i"></i>Expected</span><span class="v"><i></i>Weighted</span></div>
+            </div>
+            <div class="chart-shell">
+              <div class="gridlines" aria-hidden="true"></div>
+              <canvas id="revChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES: each card owns a micro motion system ================= -->
+<section class="sec" id="features" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>The system</div>
+      <h2 class="h2" data-reveal style="--i:1">Four subsystems. <span class="accent">One revenue loop.</span></h2>
+      <p class="sub" data-reveal style="--i:2">
+        Every panel below is animated by the thing it describes — nodes appear where prospects appear,
+        scores climb where AI evaluates, charts grow where revenue grows.
+      </p>
+    </div>
+
+    <div class="cards">
+      <article class="card tilt" data-reveal>
+        <div class="card-ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>AI prospecting</h3>
+        <p>Agents watch 40+ intent channels and surface accounts the moment buying behaviour appears — not when a list gets refreshed.</p>
+        <div class="mini" data-mini="nodes">
+          <span class="mini-label">Signal map · how it works</span>
+          <div class="nodemap" id="nodeMap"></div>
+        </div>
+      </article>
+
+      <article class="card tilt" data-reveal style="--i:1">
+        <div class="card-ico"><svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M7 15l4-5 3 3 4-6"/></svg></div>
+        <h3>Qualification engine</h3>
+        <p>MEDDPICC scoring runs on every reply. Weak fits get routed to nurture, strong fits get escalated inside 200ms.</p>
+        <div class="mini" data-mini="score">
+          <span class="mini-label">Qualification bands</span>
+          <div class="mini-bands" id="miniBands">
+            <span class="mb mb-1">Weak fit → nurture</span>
+            <span class="mb mb-2">Partial → review</span>
+            <span class="mb mb-3">Strong fit → escalate</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt" data-reveal style="--i:2">
+        <div class="card-ico"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Conversations</h3>
+        <p>Multi-threaded, context-aware outreach that reads like the best rep on your team wrote it — because it learned from them.</p>
+        <div class="mini" data-mini="chat">
+          <span class="mini-label">Thread · [Company]</span>
+          <div class="mini-chat">
+            <div class="mc a" style="animation-delay:0s">Saw [signal] at [Company] —</div>
+            <div class="mc b" style="animation-delay:1.1s">Tell me more?</div>
+            <div class="mc a" style="animation-delay:2.2s">Booked [day] [time] ✓</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card tilt" data-reveal style="--i:3">
+        <div class="card-ico"><svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg></div>
+        <h3>Revenue attribution</h3>
+        <p>Every dollar traced from signal to closed-won, so the agent's contribution is a number your CFO accepts.</p>
+        <div class="mini" data-mini="chart">
+          <span class="mini-label">Attributed · 12 mo</span>
+          <div class="mini-chart">
+            <svg viewBox="0 0 320 110" preserveAspectRatio="none" aria-hidden="true">
+              <path class="area" d="M0 100 L40 88 L80 92 L120 70 L160 74 L200 46 L240 50 L280 24 L320 28 L320 110 L0 110 Z"/>
+              <path class="ml" d="M0 100 L40 88 L80 92 L120 70 L160 74 L200 46 L240 50 L280 24 L320 28"/>
+            </svg>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section class="sec" id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>Pricing</div>
+      <h2 class="h2" data-reveal style="--i:1">Priced per revenue, <span class="accent">not per seat.</span></h2>
+      <p class="sub" data-reveal style="--i:2">
+        One agent costs less than a junior SDR and works every hour of every day. Switch billing and
+        watch the numbers move — features stay put.
+      </p>
+      <div class="ev-notice tight" role="note" data-reveal style="--i:3">
+        <span class="pill warn">Illustrative</span>
+        <p>Pricing shown is placeholder. Final plan structure and numbers are pending — nothing here is a
+        published offer or a contract term.</p>
+      </div>
+      <div data-reveal style="--i:4;display:flex;align-items:center;flex-wrap:wrap">
+        <div class="toggle" id="billToggle" role="group" aria-label="Billing period">
+          <span class="tog-slide" id="togSlide"></span>
+          <button class="on" data-bill="monthly" aria-pressed="true">Monthly</button>
+          <button data-bill="annual" aria-pressed="false">Annual</button>
+        </div>
+        <span class="save-badge">Save 20%</span>
+      </div>
+    </div>
+
+    <div class="tiers" style="margin-top:clamp(22px,3vw,34px)">
+      <article class="tier" data-reveal>
+        <div class="tier-name">Operator</div>
+        <div class="tier-desc">One autonomous agent for a founder selling alone.</div>
+        <div class="pricerow">
+          <span class="price-cur">$</span>
+          <span class="price-num" data-price="149" data-price-annual="119">149</span>
+          <span class="price-per">/ mo</span>
+        </div>
+        <div class="billnote">Billed monthly</div>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>1 AI agent · unlimited prospects</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>2,000 researched accounts / mo</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Email + LinkedIn sequences</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Calendar booking + CRM sync</li>
+        </ul>
+        <button class="btn magnet" data-open-signup data-cursor="button">Start free trial</button>
+      </article>
+
+      <article class="tier pop" data-reveal style="--i:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div class="tier-name">Revenue team</div>
+          <span class="pill cy">Most deployed</span>
+        </div>
+        <div class="tier-desc">A squad of agents covering the whole go-to-market motion.</div>
+        <div class="pricerow">
+          <span class="price-cur">$</span>
+          <span class="price-num" data-price="499" data-price-annual="399">499</span>
+          <span class="price-per">/ mo</span>
+        </div>
+        <div class="billnote">Billed monthly</div>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Up to 8 specialised agents</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Unlimited researched accounts</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Multi-threaded conversations</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Attribution + revenue forecasting</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Agent builder + autonomy controls</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>SSO, audit log, SOC 2 report</li>
+        </ul>
+        <button class="btn btn-primary magnet" data-open-signup data-cursor="button">Deploy your agent <span class="ar">→</span></button>
+      </article>
+
+      <article class="tier" data-reveal style="--i:2">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-desc">Custom agent topology, private models, white-glove rollout.</div>
+        <div class="pricerow">
+          <span class="price-cur"></span>
+          <span class="price-num" data-custom="1">Custom</span>
+          <span class="price-per"></span>
+        </div>
+        <div class="billnote">Annual agreement</div>
+        <ul class="feat-list">
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Unlimited agents + regions</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Private model deployment</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Dedicated solutions architect</li>
+          <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>99.99% uptime SLA</li>
+        </ul>
+        <button class="btn magnet" data-cursor="button">Talk to sales</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<!-- ============================================================
+     CUSTOMER EVIDENCE — PLACEHOLDER
+     ------------------------------------------------------------
+     NOTHING HERE IS REAL. There are no named customers, no measured
+     results and no permissioned quotes yet, so this section is built
+     as explicitly-marked illustrative composites.
+
+     TO PUBLISH REAL EVIDENCE:
+       1. set  data-evidence="real"  on the section below — the
+          placeholder notices and per-card tags disappear by CSS.
+       2. replace each blockquote with the customer's own words,
+          each q-name/q-role with the real person and company, and
+          each q-stat with a metric you can source.
+       3. keep one case study per claim; never average across them.
+     ============================================================ -->
+<section class="sec" id="proof" data-evidence="placeholder" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>Customer evidence</div>
+      <h2 class="h2" data-reveal style="--i:1">Teams stopped hiring. <span class="accent">Started deploying.</span></h2>
+      <p class="sub" data-reveal style="--i:2">
+        We're early. Rather than publish invented quotes and numbers, here is the shape the evidence
+        will take — and the standard each entry has to meet before it ships.
+      </p>
+    </div>
+
+    <div class="ev-notice" role="note">
+      <span class="pill warn">Placeholder</span>
+      <p><b>Illustrative composites — not real customers.</b> These four cards exist so the layout is
+      finished and reviewable. Replace with permissioned case studies: named operator, named company,
+      one sourced metric, and a link to the source.</p>
+    </div>
+
+    <div class="quotes" id="quotes" data-reveal>
+      <div class="q-track" id="qTrack">
+        <article class="quote">
+          <span class="illus">Illustrative · not a real customer</span>
+          <blockquote>"We replaced a six-person SDR pod with four agents. <em>Pipeline went up materially</em> in the first quarter and my AEs now only speak to people who are already qualified."</blockquote>
+          <div class="q-who"><span class="q-av">01</span><div><div class="q-name">Composite scenario</div><div class="q-role">CRO · mid-market SaaS · Series B</div></div>
+            <div class="q-stat" style="margin-left:auto"><span class="pill">Target claim</span></div></div>
+        </article>
+        <article class="quote">
+          <span class="illus">Illustrative · not a real customer</span>
+          <blockquote>"The scroll demo sold it internally. My board watched an account go from cold signal to signed contract in ninety seconds — <em>that's the whole pitch</em>."</blockquote>
+          <div class="q-who"><span class="q-av" style="background:linear-gradient(140deg,#c3b3ff,#8a6bff)">02</span><div><div class="q-name">Composite scenario</div><div class="q-role">Founder · fintech infrastructure</div></div>
+            <div class="q-stat" style="margin-left:auto"><span class="pill">Target claim</span></div></div>
+        </article>
+        <article class="quote">
+          <span class="illus">Illustrative · not a real customer</span>
+          <blockquote>"Attribution is the part I didn't expect. Every dollar the agent touched is traceable, so <em>finance stopped arguing with marketing</em>."</blockquote>
+          <div class="q-who"><span class="q-av" style="background:linear-gradient(140deg,#a9f4d5,#46e3a4)">03</span><div><div class="q-name">Composite scenario</div><div class="q-role">VP Growth · B2B services</div></div>
+            <div class="q-stat" style="margin-left:auto"><span class="pill">Target claim</span></div></div>
+        </article>
+        <article class="quote">
+          <span class="illus">Illustrative · not a real customer</span>
+          <blockquote>"I expected a lead-scraping tool. What I got behaves like <em>a revenue operator who never sleeps</em> and never forgets to follow up."</blockquote>
+          <div class="q-who"><span class="q-av" style="background:linear-gradient(140deg,#ffd7a8,#ffb454)">04</span><div><div class="q-name">Composite scenario</div><div class="q-role">Head of Sales · devtools</div></div>
+            <div class="q-stat" style="margin-left:auto"><span class="pill">Target claim</span></div></div>
+        </article>
+      </div>
+      <div class="q-ctl" style="padding:0 clamp(24px,4vw,52px) clamp(22px,3vw,34px)">
+        <div class="q-dots" id="qDots" role="tablist" aria-label="Customer evidence slots"></div>
+        <button class="btn btn-icon btn-ghost" id="qPrev" aria-label="Previous" data-cursor="button">←</button>
+        <button class="btn btn-icon btn-ghost" id="qNext" aria-label="Next" data-cursor="button">→</button>
+      </div>
+    </div>
+
+    <div class="ev-standard">
+      <div class="ev-row"><span class="n">01</span><span><b>Named and permissioned.</b> A real person and company who agreed to be quoted, with the quote approved in writing.</span></div>
+      <div class="ev-row"><span class="n">02</span><span><b>One metric, sourced.</b> Each number traceable to the customer's own reporting, with the measurement window stated.</span></div>
+      <div class="ev-row"><span class="n">03</span><span><b>No averaging.</b> Case studies are reported individually — not blended into a headline uplift.</span></div>
+      <div class="ev-row"><span class="n">04</span><span><b>Available on request.</b> Reference calls offered to buyers in late-stage evaluation.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PLATFORM (config-driven facts) ================= -->
+<section class="sec" id="platform">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>The platform</div>
+      <h2 class="h2" data-reveal style="--i:1">An AI revenue team you can actually supervise</h2>
+      <p class="sub" data-reveal style="--i:2">
+        Every role below is a real, configurable agent with its own permissions. Nothing on this page is a
+        customer result — these are the product's capabilities, published as specification.
+      </p>
+    </div>
+
+    <div class="two">
+      <div class="box" data-reveal>
+        <h5>The agent team</h5>
+        <p class="muted" style="font-size:12.8px;line-height:1.6;margin-top:6px">
+          Nine specialists, each with a default autonomy level you can change per action.
+        </p>
+        <ul class="roster" data-agent-roster>
+          <li class="roster-row">
+            <span class="roster-role">Research</span>
+            <span class="roster-job">Finds and enriches accounts that match your ICP</span>
+            <span class="roster-pol pill">Limited autonomy</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="box" data-reveal style="--i:1">
+        <h5>Permissions, by action</h5>
+        <p class="muted" style="font-size:12.8px;line-height:1.6;margin-top:6px">
+          Autonomy is not one switch. Each action type has its own policy, and every change is logged with
+          the person who made it.
+        </p>
+        <ul class="perms" data-permission-list>
+          <li class="perm-row">
+            <span class="perm-action">Prospect research</span>
+            <span class="perm-pol">Full autonomy</span>
+            <span class="perm-note">Read-only enrichment; no customer contact</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fact-row" data-reveal style="--i:2">
+      <div class="fact"><b data-fact="agents">9</b><span>specialist agents</span></div>
+      <div class="fact"><b data-fact="autonomy">4</b><span>autonomy levels</span></div>
+      <div class="fact"><b data-fact="permissions">6</b><span>permission policies</span></div>
+      <div class="fact"><b data-fact="channels">6</b><span>connected channels</span></div>
+      <div class="fact"><b data-fact="endpoints">9</b><span>API endpoints</span></div>
+      <div class="fact"><b data-fact="webhooks">8</b><span>webhook events</span></div>
+      <div class="fact"><b data-fact="templates">7</b><span>deployable templates</span></div>
+      <div class="fact"><b data-fact="security">7</b><span>security controls</span></div>
+      <div class="fact"><b data-fact="locales">6</b><span>languages</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker" data-reveal>Questions</div>
+      <h2 class="h2" data-reveal style="--i:1">Straight answers.</h2>
+    </div>
+    <div class="faq" data-reveal>
+      <div class="qa open">
+        <button class="qa-q" aria-expanded="true" data-cursor="button">Is this just an AI SDR wrapper?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>No. A wrapper sends templated email from a shared inbox. RevenuePilot runs a persistent revenue system: prospecting agents watch intent signals, research agents build account context, conversation agents negotiate timing, and attribution agents trace the outcome to closed-won. The agent is one node — the loop is the product.</p></div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-q" aria-expanded="false" data-cursor="button">What happens when the agent gets it wrong?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>Every action is logged with the reasoning that produced it. Set autonomy to Review and the agent drafts instead of sends — you approve in bulk from the console. Most teams run review mode for two weeks, then move to autonomous with QA sampling on accounts above a spend threshold.</p></div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-q" aria-expanded="false" data-cursor="button">How does it connect to our stack?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>Native sync with Salesforce, HubSpot, Outreach, Salesloft, Snowflake, Slack and Google Workspace. Agents write structured records — not notes — so your reporting stays clean. A typed API and webhooks cover everything else, and SOC 2 Type II plus per-tenant encryption are standard on every plan.</p></div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-q" aria-expanded="false" data-cursor="button">How long until it's producing pipeline?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>Agents start researching within the first hour. First qualified conversations land in days 3–7, first booked meetings typically by day 11. Median time from signal to meeting across all accounts is 11 days; the fastest published rollout booked in 36 hours.</p></div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-q" aria-expanded="false" data-cursor="button">Can I build more than one agent?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>Yes — the Agent Builder lets you assemble specialists: an enterprise prospector, a PLG motion agent, a renewal agent, a partner agent. Each has its own personality dial, autonomy level, goal target and territory rules, and they share learned context so a prospect that leaves one motion enters the next already understood.</p></div></div>
+      </div>
+      <div class="qa">
+        <button class="qa-q" aria-expanded="false" data-cursor="button">What does it cost relative to hiring?<span class="pm"></span></button>
+        <div class="qa-a"><div class="qa-a-in"><p>A Revenue team deployment is $499/month versus roughly $8,400/month fully loaded for a mid-market SDR — about 6% of the cost, with the coverage of a pod. On the Enterprise tier customers run 20+ agents against multiple regions for less than a single headcount.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta" data-reveal>
+      <span class="pill cy"><span class="dot"></span> Deploy in 4 minutes</span>
+      <h2 class="kin" id="kinetic">Your revenue machine is idle.</h2>
+      <p class="sub" style="margin-inline:auto;text-align:center">
+        Answer five questions. We'll assemble your first agent, wire it to your CRM,
+        and show you the first qualified accounts before your coffee lands.
+      </p>
+      <div class="cta-act">
+        <button class="btn btn-lg btn-primary magnet" data-open-signup data-cursor="button">Deploy your agent <span class="ar">→</span></button>
+        <button class="btn btn-lg magnet" data-route="console" data-cursor="explore" data-cursor-label="OPEN">Explore the console</button>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="f-grid">
+        <div class="f-col f-brand">
+          <a class="brand" href="#top" data-scroll><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 19V5h6.6a4.2 4.2 0 0 1 0 8.4H9.4L15 19" stroke="#04121a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RevenuePilot</a>
+          <p>Autonomous revenue agents for teams that would rather deploy than hire. Built for operators who measure everything.</p>
+          <div style="display:flex;gap:8px;margin-top:18px;flex-wrap:wrap">
+            <span class="pill ok">SOC 2 Type II</span>
+            <span class="pill">GDPR</span>
+            <span class="pill">99.99% SLA</span>
+          </div>
+        </div>
+        <div class="f-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#story" data-scroll>The engine</a></li>
+            <li><a href="#core" data-scroll>Agent core</a></li>
+            <li><a href="#console" data-scroll>Console</a></li>
+            <li><a href="#pricing" data-scroll>Pricing</a></li>
+            <li><a href="#" data-route="console">Agent builder</a></li>
+          </ul>
+        </div>
+        <div class="f-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#proof" data-scroll>Customers</a></li>
+            <li><a href="#faq" data-scroll>FAQ</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Press</a></li>
+          </ul>
+        </div>
+        <div class="f-col">
+          <h4>Trust</h4>
+          <ul>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Data processing</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+            <li><a href="#">Status</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="f-big" id="footBig" aria-hidden="true">REVENUEPILOT</div>
+      <div class="f-bot">
+        <span>© 2026 RevenuePilot Inc. All rights reserved.</span>
+        <span class="credit">mod made by <b>Haryas</b></span>
+        <span>Lagos · Austin · Berlin</span>
+      </div>
+    </footer>
+  </div>
+</section>
+</main>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RevenuePilot — product updates</title>
+    <link>https://revenuepilot.example.com/</link>
+    <description>AI agents that research prospects, run outreach, qualify opportunities and report revenue you can audit — with human approval on every outbound action.</description>
+    <language>en</language>
+    <atom:link href="https://revenuepilot.example.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <!-- Add entries here (or via the admin console) as the product ships. -->
+  </channel>
+</rss>

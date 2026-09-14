@@ -1,0 +1,20 @@
+{
+  "name": "revenuepilot-orb",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "RevenuePilot hero orb — R3F scene (lazy-loaded, ~30KB gzip app code)",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node --check src/*.jsx 2>/dev/null; node test-math.mjs"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "three": "0.169.0",
+    "@react-three/fiber": "8.17.10"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0"
+  }
+}

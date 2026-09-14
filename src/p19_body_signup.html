@@ -1,0 +1,107 @@
+<!-- ============================================================
+     SIGNUP: five questions, one continuous flow
+     ============================================================ -->
+<div class="sheet" id="signup" role="dialog" aria-modal="true" aria-label="Deploy your AI agent" hidden>
+  <div class="sheet-bg" data-close-signup></div>
+  <div class="sheet-in">
+    <div class="su-main">
+      <div class="su-top">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M6 19V5h6.6a4.2 4.2 0 0 1 0 8.4H9.4L15 19" stroke="#04121a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="su-prog"><i id="suBar"></i></div>
+        <span class="su-count" id="suCount">01 / 05</span>
+        <button class="su-x" data-close-signup aria-label="Close" data-cursor="button">✕</button>
+      </div>
+
+      <div class="su-viewport" id="suViewport">
+        <div class="su-slide on" data-slide="0">
+          <div class="su-q">What's your company called?</div>
+          <p class="su-hint">We use it to scope the agent and tune its voice.</p>
+          <div style="margin-top:22px;max-width:420px">
+            <input class="txt" id="suCompany" placeholder="[Company]" autocomplete="organization" aria-label="Company name">
+            <div class="ctrl-val" id="suCompanyNote">Domain detected · 240 employees · fintech</div>
+          </div>
+        </div>
+
+        <div class="su-slide" data-slide="1">
+          <div class="su-q">What do you sell?</div>
+          <p class="su-hint">The agent writes differently for infrastructure than for services.</p>
+          <div class="su-opts" id="suSells"></div>
+        </div>
+
+        <div class="su-slide" data-slide="2">
+          <div class="su-q">Who are you trying to reach?</div>
+          <p class="su-hint">Pick the buyer the agent should hunt for.</p>
+          <div class="su-opts two" id="suReach"></div>
+        </div>
+
+        <div class="su-slide" data-slide="3">
+          <div class="su-q">What's your primary goal?</div>
+          <p class="su-hint">This sets the agent's optimisation target and reporting.</p>
+          <div class="su-opts" id="suGoal"></div>
+        </div>
+
+        <div class="su-slide" data-slide="4">
+          <div class="su-q">Let's deploy your agent.</div>
+          <p class="su-hint">Review and launch. The agent starts researching the moment you confirm.</p>
+          <div class="su-opts" style="margin-top:18px">
+            <div class="opt on" style="cursor:default">
+              <span class="k"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div><div>Managed onboarding</div><div class="d">A solutions engineer wires your CRM in 48h</div></div>
+              <svg class="ck" viewBox="0 0 24 24" style="opacity:1;transform:none"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div class="opt on" style="cursor:default">
+              <span class="k"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div><div>Draft-only autonomy</div><div class="d">Nothing sends until you approve it — raise autonomy whenever you're ready</div></div>
+              <svg class="ck" viewBox="0 0 24 24" style="opacity:1;transform:none"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+            <div class="opt" style="cursor:default">
+              <span class="k"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div><div>No card for 14 days</div><div class="d">Cancel from settings — data exportable at any time</div></div>
+              <svg class="ck" viewBox="0 0 24 24" style="opacity:1;transform:none"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="su-slide" data-slide="5">
+          <div class="su-done">
+            <div class="su-orb-thumb"></div>
+            <div class="su-q" style="text-align:center"><span id="suAgentName">Your agent</span> is deployed.</div>
+            <p class="su-hint" style="text-align:center">Researching your first accounts now. Draft-only until you raise autonomy. No card required for 14 days.</p>
+            <div class="su-log" id="suLog"></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+              <button class="btn btn-primary magnet" data-route="console" data-cursor="button">Open the console <span class="ar">→</span></button>
+              <button class="btn magnet" data-close-signup data-cursor="button">Stay on the site</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="su-nav">
+        <button class="btn btn-ghost btn-sm" id="suBack" data-cursor="button">← Back</button>
+        <span class="mono muted" style="font-size:10px;letter-spacing:.14em" id="suStepHint">PRESS ENTER</span>
+        <button class="btn btn-primary magnet" id="suNext" data-cursor="button">Continue <span class="ar">→</span></button>
+      </div>
+    </div>
+
+    <aside class="su-preview">
+      <span class="su-prev-k">Agent preview · live</span>
+      <div class="su-rows" id="suRows">
+        <div class="su-row" data-row="0"><span>Company</span><b id="pvCompany">—</b></div>
+        <div class="su-row" data-row="1"><span>Offering</span><b id="pvSells">—</b></div>
+        <div class="su-row" data-row="2"><span>Audience</span><b id="pvReach">—</b></div>
+        <div class="su-row" data-row="3"><span>Goal</span><b id="pvGoal">—</b></div>
+        <div class="su-row" data-row="4"><span>Agent</span><b id="suAgentRow">Your agent · AI Revenue Specialist</b></div>
+      </div>
+      <div>
+        <div class="su-orb-thumb" style="width:56px;height:56px"></div>
+        <div class="mono muted" style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:12px">Draft-only by default · you approve every send</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+/* JS injected here */
+</script>
+</body>
+</html>

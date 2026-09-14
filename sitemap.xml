@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://revenuepilot.example.com/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+  <url>
+    <loc>https://revenuepilot.example.com/fr/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+  <url>
+    <loc>https://revenuepilot.example.com/de/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+  <url>
+    <loc>https://revenuepilot.example.com/es/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+  <url>
+    <loc>https://revenuepilot.example.com/pt/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+  <url>
+    <loc>https://revenuepilot.example.com/ar/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://revenuepilot.example.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://revenuepilot.example.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://revenuepilot.example.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://revenuepilot.example.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://revenuepilot.example.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://revenuepilot.example.com/ar/"/>
+  </url>
+</urlset>

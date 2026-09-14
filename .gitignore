@@ -1,0 +1,44 @@
+# ── things a host must never receive ─────────────────────────────────────────
+node_modules/
+
+# the live store: accounts, sessions, tickets, the mail outbox and the lock file
+data/
+
+# credentials and local plumbing
+.env
+.env.*
+.github-token
+tools/git-credential-github.sh
+
+# the console's hashed password, its sessions and its lockout timers
+admin/.admin.json
+
+# config rollback snapshots the console writes at runtime
+admin/snapshots/
+
+*.log
+
+# ── sandbox and machine plumbing: never part of the project ──────────────────
+.npm/
+.cache/
+.local/
+.config/
+.arena/
+.sudo_as_admin_successful
+
+# ── build and test output that is regenerated, not committed ─────────────────
+.crash/
+coverage/
+dist/
+out/
+
+# audit screenshots, regenerated with `node tools/audit-responsive.mjs --shots`
+screenshots/
+tools/.tmp/
+
+# ── editor and platform noise ────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

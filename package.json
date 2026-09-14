@@ -1,0 +1,27 @@
+{
+  "name": "revenuepilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RevenuePilot \u2014 the marketing site, the customer dashboard and the administrator console. No runtime dependencies.",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "start": "node server/start.mjs",
+    "start:app": "node server/app.mjs",
+    "start:admin": "node admin/server.mjs",
+    "build": "node tools/build-assets.mjs && node assemble.js",
+    "check": "node assemble.js --check",
+    "audit": "node tools/audit-responsive.mjs",
+    "deploy:check": "node tools/deploy-check.mjs",
+    "test": "node test_smoke.js && node test_orb.js && node test_variants.js && node admin/test-admin.mjs && node server/test-app.mjs",
+    "test:site": "node test_smoke.js",
+    "test:admin": "node admin/test-admin.mjs",
+    "test:app": "node server/test-app.mjs",
+    "test:browser": "node tools/app-browser-check.mjs && node tools/admin-browser-check.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "puppeteer": "^24.43.1"
+  }
+}

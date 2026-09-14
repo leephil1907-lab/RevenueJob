@@ -1,0 +1,116 @@
+<body data-cursor-state="normal">
+
+<!-- ===== boot sequence ===== -->
+<div class="boot" id="boot" aria-hidden="true">
+  <div class="boot-in">
+    <div class="boot-mark">REVENUE<b>PILOT</b></div>
+    <div class="boot-sub" id="bootSub">initialising revenue engine</div>
+    <div class="boot-bar"><i id="bootBar"></i></div>
+  </div>
+</div>
+
+<!-- ===== ambient systems ===== -->
+<canvas class="bg-canvas" id="bgCanvas" aria-hidden="true"></canvas>
+<div class="grid-fx" aria-hidden="true"></div>
+<div class="atmo atmo-1" id="atmo1" aria-hidden="true"></div>
+<div class="atmo atmo-2" id="atmo2" aria-hidden="true"></div>
+<div class="atmo atmo-3" id="atmo3" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== shared SVG defs ===== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sparkGrad" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#5ae7ff"/><stop offset="1" stop-color="#8a6bff"/>
+    </linearGradient>
+    <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5ae7ff"/><stop offset=".55" stop-color="#3f7cff"/><stop offset="1" stop-color="#8a6bff"/>
+    </linearGradient>
+    <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5ae7ff"/><stop offset=".6" stop-color="#3f7cff"/><stop offset="1" stop-color="#8a6bff"/>
+    </linearGradient>
+    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5ae7ff" stop-opacity=".55"/><stop offset="1" stop-color="#5ae7ff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="orbGrad" cx=".34" cy=".28">
+      <stop offset="0" stop-color="#bff4ff"/><stop offset=".34" stop-color="#4fc9ff"/><stop offset=".62" stop-color="#3f7cff"/><stop offset="1" stop-color="#5f43d6"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<!-- ===== cursor intelligence ===== -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <span class="cur-ring"><span class="cur-label" id="curLabel">VIEW</span></span>
+  <span class="cur-dot"></span>
+</div>
+
+<!-- ===== route transition ===== -->
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<!-- ===== nav ===== -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" data-nav="home" aria-label="RevenuePilot home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 512 512" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="bmStamp" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#5ae7ff"/><stop offset="55%" stop-color="#6fa8ff"/><stop offset="100%" stop-color="#8a6bff"/>
+            </linearGradient>
+          </defs>
+          <path d="M256 34 470 158v196L256 478 42 354V158Z" fill="#04060d" stroke="url(#bmStamp)" stroke-width="14" stroke-linejoin="round"/>
+          <path d="M256 128 372 196v88L256 352 140 284v-88Z" fill="none" stroke="url(#bmStamp)" stroke-width="11" stroke-linejoin="round" opacity=".45"/>
+          <path d="M186 226l60 34 60-34" fill="none" stroke="url(#bmStamp)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+          <path d="M206 262l40 23 40-23" fill="none" stroke="url(#bmStamp)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="256" cy="292" r="26" fill="url(#bmStamp)"/>
+        </svg>
+      </span>
+      <span class="brand-word">Revenue<b>Pilot</b></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a class="nav-link" href="#story" data-scroll data-i18n="nav.product">Product</a>
+      <a class="nav-link" href="#core" data-scroll data-i18n="nav.platform">Platform</a>
+      <a class="nav-link" href="#console" data-scroll data-i18n="nav.developers">Developers</a>
+      <a class="nav-link" href="#pricing" data-scroll data-i18n="nav.pricing">Pricing</a>
+      <a class="nav-link" href="#faq" data-scroll data-i18n="nav.faq">FAQ</a>
+    </nav>
+    <div class="nav-act">
+      <button class="theme-toggle" id="themeToggle" data-theme-toggle data-cursor="button"
+              aria-label="Switch between light and dark theme" title="Light / dark theme">
+        <svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>
+        </svg>
+        <svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2Z"/>
+        </svg>
+      </button>
+      <div class="lang-pick">
+        <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" data-cursor="button">
+          <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+            <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/>
+          </svg>
+          <span data-lang-code>EN</span>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox" aria-label="Language" hidden></div>
+      </div>
+      <button class="btn btn-sm btn-ghost" data-route="console" data-cursor="button">Open console</button>
+      <button class="btn btn-sm btn-primary magnet nav-cta" data-open-signup data-cursor="button">
+        <span class="cta-full" data-i18n="hero.ctaPrimary">Deploy your AI agent</span>
+        <span class="cta-short" data-i18n="cta.short">Deploy</span> <span class="ar">→</span>
+      </button>
+      <button class="nav-burger" id="burger" aria-label="Menu" aria-expanded="false" data-cursor="button"><i></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="nav-sheet" id="navSheet">
+  <a href="#story" data-scroll data-i18n="nav.product">Product</a>
+  <a href="#core" data-scroll data-i18n="nav.platform">Platform</a>
+  <a href="#console" data-scroll data-i18n="nav.developers">Developers</a>
+  <a href="#pricing" data-scroll data-i18n="nav.pricing">Pricing</a>
+  <a href="#faq" data-scroll data-i18n="nav.faq">FAQ</a>
+  <button class="btn btn-lg btn-primary" data-open-signup><span data-i18n="hero.ctaPrimary">Deploy your AI agent</span> <span class="ar">→</span></button>
+  <div class="sheet-lang" id="sheetLangs" aria-label="Language"></div>
+</div>
+
+<span id="top"></span>

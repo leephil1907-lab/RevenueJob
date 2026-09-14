@@ -1,0 +1,311 @@
+<!-- ============ AGENT BUILDER ============ -->
+        <section class="os-pane" data-os-pane="builder">
+          <div class="os-h">
+            <div><h3>Agent Builder</h3><p>assemble an AI employee · same component everywhere in the product</p></div>
+            <div class="r"><span class="pill vi" id="builderTemplate">Blank agent</span></div>
+          </div>
+
+          <div class="builder">
+            <div class="agent-card">
+              <div class="orb auto" id="builderOrb">
+                <i></i><i></i><i></i>
+                <span class="orb-core"></span>
+              </div>
+              <div style="font-size:19px;font-weight:600;letter-spacing:-.03em" id="builderName">New agent</div>
+              <div class="mono muted" style="font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px" id="builderRole">AI Revenue Specialist</div>
+              <div class="b-skills" id="builderSkills">
+                <div class="b-skill on" data-skill="Prospecting">Prospecting<span class="sw"></span></div>
+                <div class="b-skill on" data-skill="Qualification">Qualification<span class="sw"></span></div>
+                <div class="b-skill on" data-skill="Follow-up">Follow-up<span class="sw"></span></div>
+                <div class="b-skill on" data-skill="Booking">Booking<span class="sw"></span></div>
+              </div>
+              <div class="hair" style="margin:18px 0"></div>
+              <div class="pcard-meta" style="text-align:left">Assembled capabilities</div>
+              <div class="core-legend" style="margin-top:10px" id="builderCaps"></div>
+            </div>
+
+            <div class="glass" style="padding:clamp(18px,2.4vw,26px)">
+              <div class="kicker">Configuration</div>
+              <h3 style="font-size:clamp(20px,2.4vw,27px);font-weight:620;letter-spacing:-.04em;margin-top:12px">Configure the specialist.</h3>
+              <p class="sub" style="margin-top:12px">Specialists share learned context, so a prospect who leaves one motion arrives in the next already understood.</p>
+
+              <div class="ctrl" style="margin-top:24px">
+                <div class="ctrl-lab"><span>Name</span><b>shown on every send</b></div>
+                <input class="txt" id="agentNameInput" value="" placeholder="Name your agent" aria-label="Agent name">
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Specialisation</span><b id="specLab">Sales Agent</b></div>
+                <!-- filled from the agent roster in site.config.json -->
+                <select class="txt" id="agentSpec" aria-label="Agent specialisation">
+                  <option>Agent role</option>
+                </select>
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Personality</span><b id="personalityLab">Professional</b></div>
+                <input type="range" min="0" max="100" value="34" id="personality" aria-label="Personality: professional to friendly">
+                <div class="ctrl-lab" style="margin-top:4px"><span class="muted" style="letter-spacing:.1em">Professional</span><span class="muted" style="letter-spacing:.1em">Friendly</span></div>
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Autonomy</span><b id="autonomyLab">Review-first</b></div>
+                <input type="range" min="0" max="100" value="42" id="autonomy" aria-label="Autonomy: review to autonomous">
+                <div class="ctrl-val" id="autonomyVal">Nothing leaves the workspace until you change this.</div>
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Monthly revenue goal</span><b id="goalLab">—</b></div>
+                <input type="range" min="10000" max="250000" step="5000" value="50000" id="goal" aria-label="Monthly revenue goal">
+                <div class="ctrl-val" id="goalVal">Enter your deal size and close rate to size this goal.</div>
+              </div>
+
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Working language</span><b id="agentLangLab">English</b></div>
+                <!-- filled from i18n/locales.json -->
+                <select class="txt" id="agentLang" aria-label="Agent working language">
+                  <option value="en">English</option>
+                </select>
+                <div class="ctrl-val" id="agentLangSample" dir="auto">A short opening line in the agent's working language.</div>
+              </div>
+
+              <div class="core-legend" style="margin-top:22px">
+                <span class="pill cy" id="estPipe">Est. pipeline —K</span>
+                <span class="pill" id="estTime">Not deployed</span>
+                <span class="pill" id="estCost">~— / 1k actions</span>
+              </div>
+
+              <button class="btn btn-lg btn-primary magnet" style="margin-top:22px;width:100%;justify-content:center" id="deployAgentBtn" data-cursor="button" data-outbound>
+                Deploy <span id="deployName">your agent</span> <span class="ar">→</span>
+              </button>
+              <p class="tiny" style="margin-top:12px">Deploying writes to the audit log and starts research immediately. Draft-only until you change the autonomy level.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ MARKETPLACE ============ -->
+        <section class="os-pane" data-os-pane="marketplace">
+          <div class="os-h">
+            <div><h3>Marketplace</h3><p>specialists and templates from RevenuePilot and vetted partners</p></div>
+            <div class="r">
+              <button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Publisher applications open after you connect a payout account.">Become a publisher</button>
+            </div>
+          </div>
+          <div class="subtabs">
+            <button class="subtab on" data-mktab="agents" data-cursor="button">Agents</button>
+            <button class="subtab" data-mktab="templates" data-cursor="button">Templates</button>
+            <button class="subtab" data-mktab="installed" data-cursor="button">Installed</button>
+          </div>
+          <div class="subpane on" data-mkpane="agents"><div class="mk" id="mkAgents" style="margin-top:14px"></div></div>
+          <div class="subpane" data-mkpane="templates">
+            <div class="mk" id="mkTemplates" style="margin-top:14px"></div>
+            <div class="panel-x" style="margin-top:14px">
+              <div class="os-h"><div><h3>One click: deploy template</h3><p>creates the agent, the sequence and the permission set</p></div></div>
+              <p style="font-size:13.2px;line-height:1.66;color:var(--tx-2);margin-top:8px">
+                Templates arrive with a pre-built policy: which actions are autonomous, which need approval, which are disabled.
+                You can change any of it afterwards — the template is a starting position, not a lock-in.
+              </p>
+            </div>
+          </div>
+          <div class="subpane" data-mkpane="installed">
+            <div class="grid-3" id="mkInstalled" style="margin-top:14px"></div>
+            <div class="panel-x" style="margin-top:14px">
+              <div class="os-h"><div><h3>Marketplace economics</h3><p>publisher + platform split</p></div></div>
+              <div class="grid-3" style="gap:10px;margin-top:12px">
+                <div class="fc"><div class="k">Payout to publishers</div><div class="v">70%</div><div class="d">revenue share</div></div>
+                <div class="fc"><div class="k">Platform fee</div><div class="v">30%</div><div class="d">hosting + review + payments</div></div>
+                <div class="fc"><div class="k">Review SLA</div><div class="v">5 days</div><div class="d">security + policy audit</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ AGENCY ============ -->
+        <section class="os-pane" data-os-pane="agency">
+          <div class="os-h">
+            <div><h3>Agency &amp; white-label</h3><p>run many clients from one workspace · resell under your brand</p></div>
+            <div class="r">
+              <label class="next-item" style="cursor:pointer;padding:8px 12px">
+                <span class="sw on" data-toggle="whiteLabel"></span>
+                <span class="t" style="font-size:12.6px">White-label</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="split c">
+            <div class="grid-2" style="grid-template-columns:1fr;gap:11px" id="agencyClients"></div>
+            <div>
+              <div class="panel-x">
+                <div class="os-h">
+                  <div><h3 id="agencyClientName">No clients yet</h3><p id="agencyClientMeta">—</p></div>
+                  <div class="r"><span class="pill vi" id="agencyBrand">Powered by RevenuePilot</span></div>
+                </div>
+                <div class="forecast" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px">
+                  <div class="fc"><div class="k">Meetings / mo</div><div class="v" id="agencyMeetings">—</div><div class="d">booked by agents</div></div>
+                  <div class="fc hot"><div class="k">Pipeline / mo</div><div class="v" data-money="">—</div><div class="d">created</div></div>
+                  <div class="fc"><div class="k">Client margin</div><div class="v" id="agencyMargin">—</div><div class="d">after platform cost</div></div>
+                </div>
+                <div class="grid-2" style="margin-top:14px">
+                  <div>
+                    <div class="os-h"><h3 style="font-size:12.5px">Agents on this client</h3></div>
+                    <div class="next-list" id="agencyAgents"></div>
+                  </div>
+                  <div>
+                    <div class="os-h"><h3 style="font-size:12.5px">Active campaigns</h3></div>
+                    <div class="logstream" id="agencyCampaigns" style="max-height:none"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Reseller controls</h3><p>applies to every client in this workspace</p></div></div>
+                <div class="perm">
+                  <div class="perm-row"><span class="nm">Client billing<i>invoiced monthly</i></span>
+                    <div class="seg" data-seg="billing"><button class="on" data-val="pass">Pass-through</button><button data-val="markup">Markup 20%</button><button data-val="flat">Flat fee</button></div>
+                  </div>
+                  <div class="perm-row"><span class="nm">Brand surface<i>emails, console, reports</i></span>
+                    <div class="seg" data-seg="brand"><button class="on" data-val="rp">RevenuePilot</button><button data-val="co">Co-branded</button><button data-val="white">Client brand</button></div>
+                  </div>
+                  <div class="perm-row"><span class="nm">Data isolation<i>per-client boundaries</i></span>
+                    <div class="seg" data-seg="iso"><button class="on" data-val="hard">Hard separation</button><button data-val="shared">Shared context</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ DEVELOPERS ============ -->
+        <section class="os-pane" data-os-pane="developers">
+          <div class="os-h">
+            <div><h3>Developers</h3><p>RevenuePilot as infrastructure · typed API + webhooks</p></div>
+            <div class="r">
+              <span class="pill cy">API v2</span>
+              <button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Keys are minted in your own workspace — this page never stores them.">Create key</button>
+            </div>
+          </div>
+
+          <div class="split a">
+            <div class="panel-x" style="padding:12px">
+              <div class="os-h" style="padding:4px 6px 0"><div><h3 style="font-size:12.5px">Endpoints</h3><p>click to inspect</p></div></div>
+              <div id="apiList" style="margin-top:10px"></div>
+            </div>
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3 id="apiTitle">POST /agents</h3><p id="apiDesc">Create an agent</p></div>
+                  <div class="r"><span class="pill" id="apiAuth">Bearer key</span></div>
+                </div>
+                <div class="code" id="apiCode" style="margin-top:12px"></div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Webhooks</h3><p>delivered to your endpoint with retries + signatures</p></div>
+                  <div class="r"><span class="pill" id="whMeta">—</span></div>
+                </div>
+                <div class="wh-list" id="whList" style="margin-top:10px"></div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Keys &amp; limits</h3><p>scoped, revocable</p></div></div>
+                <div class="perm" style="margin-top:12px">
+                  <div class="perm-row"><span class="nm">Live key<i>read + write</i></span><span class="api-path" id="keyLive">—</span></div>
+                  <div class="perm-row"><span class="nm">Test key<i>sandbox data</i></span><span class="api-path" id="keyTest">—</span></div>
+                  <div class="perm-row"><span class="nm">Rate limit<i>per workspace</i></span><span class="api-path" id="rateLimit">—</span></div>
+                  <div class="perm-row"><span class="nm">Data residency<i>per region</i></span><span class="api-path">EU · US · APAC</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ TRUST & AUDIT ============ -->
+        <section class="os-pane" data-os-pane="trust">
+          <div class="os-h">
+            <div><h3>Trust center</h3><p>security · privacy · AI controls · evidence</p></div>
+            <div class="r">
+              <span class="pill ok">SOC 2 Type II (target)</span>
+              <button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="The trust pack is assembled from your own security evidence.">Download trust pack</button>
+            </div>
+          </div>
+
+          <div class="trust-grid" id="trustGrid"></div>
+
+          <div class="os-sec grid-2">
+            <div class="panel-x">
+              <div class="os-h"><div><h3>Audit log</h3><p>immutable · exportable · who did what and why</p></div>
+                <div class="r"><button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Your audit log is exportable once activity exists.">Export</button></div>
+              </div>
+              <div class="audit" id="auditLog" style="margin-top:12px"></div>
+            </div>
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Your data controls</h3><p>self-serve, no support ticket</p></div></div>
+                <div class="next-list" id="dataControls" style="margin-top:12px"></div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>AI controls</h3><p>hard limits the model cannot override</p></div></div>
+                <div class="perm" id="aiControls" style="margin-top:12px"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ SETTINGS ============ -->
+        <section class="os-pane" data-os-pane="settings">
+          <div class="os-h">
+            <div><h3>Settings</h3><p>workspace · localization · automation defaults</p></div>
+            <div class="r"><span class="pill cy" id="stZone">Africa/Lagos · GMT+1</span></div>
+          </div>
+
+          <div class="grid-2">
+            <div class="panel-x">
+              <div class="os-h"><div><h3>Localization</h3><p>international by default · agents, UI, billing</p></div></div>
+              <div class="ctrl" style="margin-top:16px">
+                <div class="ctrl-lab"><span>Interface language</span><b id="stLangLab">English</b></div>
+                <select class="txt" id="stLang" aria-label="Interface language"></select>
+              </div>
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Billing currency</span><b id="stCurLab">USD</b></div>
+                <select class="txt" id="stCur" aria-label="Billing currency"></select>
+              </div>
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Timezone awareness</span><b id="stTzLab">Send inside prospect hours</b></div>
+                <div class="next-list">
+                  <div class="next-item"><span class="t">Americas</span><span class="w">sends inside local business hours</span></div>
+                  <div class="next-item"><span class="t">Europe, Middle East, Africa</span><span class="w">sends inside local business hours</span></div>
+                  <div class="next-item"><span class="t">Asia-Pacific</span><span class="w">holds to the next local morning</span></div>
+                </div>
+              </div>
+              <div class="ctrl">
+                <div class="ctrl-lab"><span>Agent languages</span><b>6 enabled</b></div>
+                <div class="chips" id="agentLangs"></div>
+                <div class="ctrl-val" id="langSample" dir="auto">Agents reply in the prospect's preferred language and keep your tone spec.</div>
+              </div>
+            </div>
+
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Automation defaults</h3><p>applied to new agents</p></div></div>
+                <div class="ladder" id="defaultLadder" style="margin-top:12px"></div>
+                <div class="perm" style="margin-top:14px">
+                  <div class="perm-row"><span class="nm">Outbound on Sundays<i>deliverability guard</i></span><span class="sw on" data-toggle="noSunday"></span></div>
+                  <div class="perm-row"><span class="nm">Discounts above 15%<i>always human</i></span><span class="sw on" data-toggle="discountGuard"></span></div>
+                  <div class="perm-row"><span class="nm">Send window<i>prospect local time</i></span><span class="api-path" id="sendWindow">09:00–17:30</span></div>
+                </div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Operational safety</h3><p>what happens if something goes wrong</p></div></div>
+                <div class="next-list" style="margin-top:12px">
+                  <div class="next-item"><span class="dot" style="background:var(--rose)"></span><span class="t">Global pause stops all outbound actions immediately</span></div>
+                  <div class="next-item"><span class="dot" style="background:var(--amb)"></span><span class="t">Budget limit pauses paid tool calls, keeps drafts</span></div>
+                  <div class="next-item"><span class="dot ok" style="background:var(--ok)"></span><span class="t">Every pause, resume and override is written to the audit log</span></div>
+                </div>
+                <button class="btn magnet" style="margin-top:16px" id="killFromSettings" data-cursor="button">Pause all agents now</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div><!-- /os-panes -->
+    </div><!-- /os-main -->
+  </div><!-- /os-shell -->
+</main>
+
+<div class="toastwrap" id="toastWrap" aria-live="polite"></div>

@@ -1,0 +1,415 @@
+<!-- ============================================================
+     VIEW: HOME
+     ============================================================ -->
+<main id="view-home">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow">
+          <span class="dot"></span> <span data-i18n="hero.badge">RevenuePilot OS · AI revenue agents</span>
+          <span class="muted" style="opacity:.5">/</span>
+          <span class="muted"><b data-fact="agents">9</b> <span data-i18n="facts.agents">specialist agents</span></span>
+        </div>
+
+        <h1 class="cine" id="heroTitle">
+          <span class="line"><span class="line-in" style="--i:0">Your AI revenue</span></span>
+          <span class="line"><span class="line-in" style="--i:1">team. <span class="accent">Always working.</span></span></span>
+        </h1>
+
+        <p class="lede" data-reveal style="--delay:260ms">
+          RevenuePilot deploys intelligent AI agents that research prospects, engage conversations,
+          qualify opportunities, follow up automatically, and help your team turn pipeline into
+          measurable revenue.
+        </p>
+
+        <div class="hero-cta" data-reveal style="--delay:340ms">
+          <button class="btn btn-lg btn-primary magnet" data-open-signup data-cursor="button">
+            Deploy your AI agent <span class="ar">→</span>
+          </button>
+          <button class="btn btn-lg magnet" data-scroll data-target="#live" data-cursor="play" data-cursor-label="WATCH">
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+            See how it works
+          </button>
+        </div>
+
+        <div class="hero-trust" data-reveal style="--delay:420ms">
+          <span><span class="dot ok"></span> Approval on every outbound action</span>
+          <span>·</span>
+          <span><b data-fact="autonomy">4</b> autonomy levels, set per action</span>
+          <span>·</span>
+          <span>Full audit trail</span>
+          <span>·</span>
+          <span><b data-fact="locales">6</b> languages</span>
+        </div>
+      </div>
+
+      <!-- the orb: a revenue engine you can watch -->
+      <div class="orb-stage" id="orbStage" data-reveal style="--rs:.98;--ry:26px">
+        <!-- tier 0 fallback: static SVG poster (no JS, reduced motion, or no canvas) -->
+        <svg class="orb-poster" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <defs>
+            <radialGradient id="prCore" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#eafcff" stop-opacity=".95"/>
+              <stop offset=".22" stop-color="#5ae7ff" stop-opacity=".5"/>
+              <stop offset=".55" stop-color="#6366f1" stop-opacity=".16"/>
+              <stop offset="1" stop-color="#5ae7ff" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="prVign" cx="50%" cy="42%" r="60%">
+              <stop offset="0" stop-color="#0b1622" stop-opacity=".0"/>
+              <stop offset="1" stop-color="#04060a" stop-opacity=".55"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="400" fill="url(#prVign)"/>
+          <!-- connection lines between pipeline stages -->
+          <path class="pr-link" d="M118 200 L146 200 M92 214 L126 226 M270 196 L232 188 M286 226 L246 214"/>
+          <!-- stage rings: Prospects → Intelligence → Conversations → Opportunities → Revenue -->
+          <ellipse class="pr-ring" cx="200" cy="200" rx="146" ry="61" stroke="rgba(111,168,255,.30)"/>
+          <ellipse class="pr-ring" cx="200" cy="200" rx="126" ry="53" stroke="rgba(138,107,255,.32)"/>
+          <ellipse class="pr-ring" cx="200" cy="200" rx="107" ry="45" stroke="rgba(90,231,255,.34)"/>
+          <ellipse class="pr-ring" cx="200" cy="200" rx="87" ry="37" stroke="rgba(70,227,164,.32)"/>
+          <ellipse class="pr-ring" cx="200" cy="200" rx="67" ry="28" stroke="rgba(234,252,255,.34)"/>
+          <!-- nodes on the rings -->
+          <g fill="#6fa8ff">
+            <circle class="pr-dot" cx="86" cy="182" r="1.6"/><circle class="pr-dot" cx="140" cy="242" r="1.4"/>
+            <circle class="pr-dot" cx="268" cy="236" r="1.5"/><circle class="pr-dot" cx="318" cy="176" r="1.3"/>
+            <circle class="pr-dot" cx="200" cy="139" r="1.4"/><circle class="pr-dot" cx="200" cy="261" r="1.5"/>
+          </g>
+          <g fill="#8a6bff">
+            <circle class="pr-dot" cx="112" cy="228" r="1.4"/><circle class="pr-dot" cx="164" cy="146" r="1.3"/>
+            <circle class="pr-dot" cx="252" cy="152" r="1.4"/><circle class="pr-dot" cx="292" cy="214" r="1.3"/>
+          </g>
+          <g fill="#5ae7ff">
+            <circle class="pr-dot" cx="136" cy="216" r="1.4"/><circle class="pr-dot" cx="228" cy="164" r="1.5"/>
+            <circle class="pr-dot" cx="266" cy="226" r="1.3"/>
+          </g>
+          <g fill="#46e3a4">
+            <circle class="pr-dot" cx="160" cy="228" r="1.4"/><circle class="pr-dot" cx="238" cy="176" r="1.4"/>
+          </g>
+          <!-- the core + a pulse arriving from the outer ring -->
+          <circle class="pr-core-glow" cx="200" cy="200" r="96" fill="url(#prCore)"/>
+          <circle cx="200" cy="200" r="33" fill="none" stroke="rgba(190,240,255,.22)"/>
+          <circle cx="200" cy="200" r="24" fill="none" stroke="rgba(190,240,255,.18)"/>
+          <circle cx="200" cy="200" r="2.6" fill="rgba(240,253,255,.9)"/>
+          <circle cx="170" cy="188" r="2" fill="rgba(200,245,255,.85)"/>
+          <circle cx="236" cy="214" r="1.8" fill="rgba(198,247,228,.85)"/>
+        </svg>
+        <div class="orb-mount" id="orbMount"></div>
+        <div class="orb-labels" id="orbLabels">
+          <span class="orb-label" data-stage="0"><span class="n"></span>Prospects <b>sourced</b></span>
+          <span class="orb-label" data-stage="1"><span class="n"></span>Intelligence <b>scored</b></span>
+          <span class="orb-label" data-stage="2"><span class="n"></span>Conversations <b>handled</b></span>
+          <span class="orb-label" data-stage="3"><span class="n"></span>Opportunities <b>qualified</b></span>
+          <span class="orb-label rev" data-stage="4"><span class="n"></span>Revenue <b>attributed</b></span>
+        </div>
+        <span class="orb-badge" id="orbBadge"><i></i> <span id="orbBadgeText">Initialising</span></span>
+        <div class="orb-ticker">
+          <div>
+            <div class="k">This view · pipeline model</div>
+            <div class="v" id="orbModel">Idle</div>
+          </div>
+          <div class="orb-flow" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="st"><span class="dot"></span> <b id="orbAgents"><span data-fact="agents">9</span> agent roles</b> ready</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats" data-reveal style="--ry:30px">
+      <div class="stat">
+        <div class="stat-num nums" data-mirror="expected">—</div>
+        <div class="stat-lab">Expected revenue / month <span class="muted">from your inputs</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num nums" data-mirror="deals">—</div>
+        <div class="stat-lab">Deals per month <span class="muted">from your inputs</span></div>
+      </div>
+      <div class="stat">
+        <div class="stat-num nums"><span data-fact="permissions">6</span></div>
+        <div class="stat-lab">Permission policies you control</div>
+      </div>
+    </div>
+    <div class="hero-note">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v5M12 16h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      <span data-i18n="hero.note">Live pipeline math below is computed from your own inputs. No demo figures are shipped with this site.</span>
+      <button class="link-btn" data-scroll data-target="#math" data-cursor="button">Run the numbers →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PIPELINE MATH (interactive) ================= -->
+<section class="live-band" id="live">
+  <div class="wrap" data-calc-root>
+    <div class="sec-head">
+      <div class="kicker" data-reveal>Try the math</div>
+      <h2 class="h2" data-reveal style="--i:1"><span data-i18n="calc.title">Pipeline maths, with your numbers</span></h2>
+      <p class="sub" data-reveal style="--i:2" data-i18n="calc.lede">
+        Every figure below is calculated from what you type, using the formula printed beside it.
+      </p>
+    </div>
+
+    <div class="calc glass inset-hi" data-reveal style="--rs:.99;--ry:26px">
+      <div class="calc-inputs">
+        <div class="calc-field">
+          <label for="ciProspects" data-i18n="calc.field.prospects">Prospects per month</label>
+          <input id="ciProspects" data-calc="prospects" type="number" inputmode="numeric" min="0" max="100000" step="50" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-field">
+          <label for="ciQual" data-i18n="calc.field.qual">Qualification rate %</label>
+          <input id="ciQual" data-calc="qual" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-field">
+          <label for="ciConv" data-i18n="calc.field.conv">Qualified → conversation %</label>
+          <input id="ciConv" data-calc="conv" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-field">
+          <label for="ciMeet" data-i18n="calc.field.meet">Conversation → meeting %</label>
+          <input id="ciMeet" data-calc="meet" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-field">
+          <label for="ciClose" data-i18n="calc.field.close">Meeting → deal %</label>
+          <input id="ciClose" data-calc="close" type="number" inputmode="decimal" min="0" max="100" step="1" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-field">
+          <label for="ciDeal" data-i18n="calc.field.deal">Average deal size</label>
+          <input id="ciDeal" data-calc="deal" type="number" inputmode="numeric" min="0" max="1000000" step="500" placeholder="—" autocomplete="off">
+        </div>
+        <div class="calc-actions">
+          <button class="btn btn-sm" data-calc-example data-cursor="button" data-i18n="calc.example">Use example values</button>
+          <button class="btn btn-sm ghost" data-calc-clear data-cursor="button" data-i18n="calc.clear">Clear all fields</button>
+        </div>
+      </div>
+
+      <div class="calc-chain" data-state="empty">
+        <ol class="chain">
+          <li class="chain-step">
+            <span class="chain-lab" data-i18n="calc.out.prospects">Prospects</span>
+            <span class="chain-val" data-out="prospects">—</span>
+            <span class="chain-bar"><i data-bar="prospects"></i></span>
+          </li>
+          <li class="chain-step">
+            <span class="chain-lab">× <b data-calc-echo="qual">—</b>% <span data-i18n="calc.out.qualified">Qualified</span></span>
+            <span class="chain-val" data-out="qualified">—</span>
+            <span class="chain-bar"><i data-bar="qualified"></i></span>
+          </li>
+          <li class="chain-step">
+            <span class="chain-lab">× <b data-calc-echo="conv">—</b>% <span data-i18n="calc.out.conversations">Conversations</span></span>
+            <span class="chain-val" data-out="conversations">—</span>
+            <span class="chain-bar"><i data-bar="conversations"></i></span>
+          </li>
+          <li class="chain-step">
+            <span class="chain-lab">× <b data-calc-echo="meet">—</b>% <span data-i18n="calc.out.meetings">Meetings</span></span>
+            <span class="chain-val" data-out="meetings">—</span>
+            <span class="chain-bar"><i data-bar="meetings"></i></span>
+          </li>
+          <li class="chain-step">
+            <span class="chain-lab">× <b data-calc-echo="close">—</b>% <span data-i18n="calc.out.deals">Deals</span></span>
+            <span class="chain-val" data-out="deals">—</span>
+            <span class="chain-bar"><i data-bar="deals"></i></span>
+          </li>
+        </ol>
+
+        <div class="calc-results">
+          <div class="result-card">
+            <div class="result-lab" data-i18n="calc.out.expected">Expected revenue</div>
+            <div class="result-val nums" data-out="expected">—</div>
+            <div class="result-meta">deals × <span data-out="perDeal">—</span></div>
+          </div>
+          <div class="result-card">
+            <div class="result-lab" data-i18n="calc.out.pipeline">Weighted pipeline</div>
+            <div class="result-val nums" data-out="pipeline">—</div>
+            <div class="result-meta">expected ÷ close rate</div>
+          </div>
+        </div>
+
+        <p class="calc-note" data-out="note" aria-live="polite" data-i18n="calc.empty">Enter your numbers to see the arithmetic.</p>
+        <p class="calc-foot" data-i18n="calc.assumption">Your inputs, your assumptions. Change any field and the chain recalculates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY: scroll-scrubbed product demo ================= -->
+<section class="story" id="story">
+  <div class="story-track" id="storyTrack">
+    <div class="story-sticky">
+      <div class="wrap story-inner">
+        <div class="story-side">
+          <div class="kicker">Illustrative walkthrough <span class="muted">· a scenario, not a customer</span></div>
+          <h2 class="story-title" id="storyTitle">A prospect enters the system.</h2>
+          <p class="story-desc" id="storyDesc">
+            Scroll. You're not reading a feature list — you're watching an account move from anonymous
+            signal to booked revenue, one agent decision at a time.
+          </p>
+          <ol class="steps" id="storySteps" aria-label="Agent workflow steps">
+            <li class="step"><span class="ind"></span><span class="step-l">Prospect enters</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Agent researches</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Outreach composed</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Prospect replies</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Opportunity qualified</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Meeting booked</span></li>
+            <li class="step"><span class="ind"></span><span class="step-l">Revenue influenced</span></li>
+          </ol>
+        </div>
+
+        <div class="story-stage" id="storyStage">
+          <!-- stage 1 -->
+          <article class="panel" data-panel="0">
+            <div class="panel-head">
+              <span class="pill cy">Step 01 · Signal</span>
+              <span class="mono muted" style="font-size:10px">inbound signal · 09:14:02</span>
+            </div>
+            <div class="panel-body" style="align-content:center;justify-items:center;text-align:center">
+              <div class="pcard" data-s="scan" style="max-width:340px;width:100%;padding:16px">
+                <div class="pcard-top">
+                  <span class="av">NL</span>
+                  <div>
+                    <div class="pcard-name">[Company]</div>
+                    <div class="pcard-meta">matched to your ICP · inbound</div>
+                  </div>
+                </div>
+                <div class="scanlines"><span class="scan"><i></i></span></div>
+                <div class="pcard-foot">
+                  <span class="pcard-meta" data-p1="signal">Signal detected</span>
+                  <span class="score-badge" data-p1="score">—</span>
+                </div>
+              </div>
+              <p class="muted mono" style="font-size:10.5px;letter-spacing:.12em;margin-top:6px">MATCHED AGAINST THE SIGNAL CLASSES YOU DEFINE</p>
+            </div>
+          </article>
+
+          <!-- stage 2 -->
+          <article class="panel" data-panel="1">
+            <div class="panel-head">
+              <span class="pill vi">Step 02 · Research</span>
+              <span class="mono muted" style="font-size:10px">sources cited per field</span>
+            </div>
+            <div class="panel-body">
+              <div class="field" data-at="0.02"><span class="field-k">Company</span><span class="field-v">[Company] · <span class="hl">[location]</span></span></div>
+              <div class="field" data-at="0.14"><span class="field-k">Industry</span><span class="field-v">from your ICP definition</span></div>
+              <div class="field" data-at="0.26"><span class="field-k">Size</span><span class="field-v">headcount and go-to-market ratio</span></div>
+              <div class="field" data-at="0.38"><span class="field-k">Stack</span><span class="field-v">detected from public sources</span></div>
+              <div class="field" data-at="0.5"><span class="field-k">Pain points</span><span class="field-v" data-p2="pain"></span></div>
+              <div class="field" data-at="0.64"><span class="field-k">Fit score</span><span class="field-v">banded on your own ICP rules — <span class="hl">nurture</span> / <span class="hl">review</span> / <span class="hl">escalate</span></span></div>
+              <div class="field" data-at="0.76"><span class="field-k">Trigger</span><span class="field-v">hiring and product signals, dated</span></div>
+            </div>
+          </article>
+
+          <!-- stage 3 -->
+          <article class="panel" data-panel="2">
+            <div class="panel-head">
+              <span class="pill cy">Step 03 · Outreach</span>
+              <span class="mono muted" style="font-size:10px">draft v3 · tone: warm operator</span>
+            </div>
+            <div class="panel-body">
+              <div class="mail">
+                <div class="mail-head">
+                  <div class="mrow"><b>To</b> [first name]@[company domain] · <span class="muted">template preview</span></div>
+                  <div class="mrow"><b>Subject</b> <span data-p3="subject"></span></div>
+                </div>
+                <div class="mail-body" data-p3="body"><span class="caret" data-p3="caret"></span></div>
+              </div>
+              <div class="core-legend" style="margin-top:2px">
+                <span class="pill">Personalised with the signals you track</span>
+                <span class="pill ok">Deliverability monitored</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- stage 4 -->
+          <article class="panel" data-panel="3">
+            <div class="panel-head">
+              <span class="pill amb">Step 04 · Reply</span>
+              <span class="mono muted" style="font-size:10px">reply arrives on your connected channel</span>
+            </div>
+            <div class="panel-body" style="align-content:center">
+              <div class="bubble me" data-p4="me"><span class="who">Agent · Outreach</span>Noticed [Company] has been hiring on the go-to-market side. Most teams at that stage lose their first 90 days to manual research and slow follow-up. Worth 15 minutes?</div>
+              <div class="bubble them" data-p4="them"><span class="who">[First name] · VP Revenue</span>Interesting. Can you show me how this works?</div>
+              <div class="bubble me" data-p4="me2"><span class="who">Your agent</span>Yes — I can walk through the account trace and the signal-to-meeting path. [Day] at [Time], or [Day] at [Time]?</div>
+            </div>
+          </article>
+
+          <!-- stage 5 -->
+          <article class="panel" data-panel="4">
+            <div class="panel-head">
+              <span class="pill vi">Step 05 · Qualification</span>
+              <span class="mono muted" style="font-size:10px">MEDDPICC criteria, checked against your definition</span>
+            </div>
+            <div class="panel-body" style="align-content:center">
+              <div class="scorewrap">
+                <div class="ring">
+                  <svg viewBox="0 0 120 120" aria-hidden="true">
+                    <circle class="bgc" cx="60" cy="60" r="52"/>
+                    <circle class="fgc" id="scoreRing" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+                  </svg>
+                  <div class="score-num"><b class="nums" id="scoreVal">0</b><span>criteria checked · of 5</span></div>
+                </div>
+                <div class="ticks" id="scoreTicks">
+                  <div class="tick" data-at="0.30"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Metrics defined<span class="v">what a good outcome means</span></div>
+                  <div class="tick" data-at="0.46"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Economic buyer known<span class="v">who signs, named</span></div>
+                  <div class="tick" data-at="0.58"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Decision criteria clear<span class="v">what they compare on</span></div>
+                  <div class="tick" data-at="0.70"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Decision process mapped<span class="v">steps and dates</span></div>
+                  <div class="tick" data-at="0.82"><span class="bx"><svg viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Competition understood<span class="v">who else is in the room</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- stage 6 -->
+          <article class="panel" data-panel="5">
+            <div class="panel-head">
+              <span class="pill ok">Step 06 · Booked</span>
+              <span class="mono muted" style="font-size:10px">calendar · America/Chicago</span>
+            </div>
+            <div class="panel-body">
+              <div class="cal">
+                <!-- real dates: filled from the visitor's own clock at load -->
+                <div class="cal-day" data-cal="-3"><span>—</span><b>—</b></div>
+                <div class="cal-day" data-cal="-2"><span>—</span><b>—</b></div>
+                <div class="cal-day" data-cal="-1"><span>—</span><b>—</b></div>
+                <div class="cal-day slot" data-cal="1" data-p6="slot"><span>—</span><b>—</b></div>
+                <div class="cal-day slot" data-cal="2" data-p6="slot2"><span>—</span><b>—</b></div>
+              </div>
+              <div class="booking" data-p6="booking">
+                <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#46e3a4" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <div>
+                  <div style="font-size:13.8px;font-weight:540">Discovery call · [First name], VP Revenue</div>
+                  <div class="pcard-meta" style="margin-top:3px">[Day] · [Time]–[Time] · AE: [Owner]</div>
+                </div>
+                <span class="pill ok" style="margin-left:auto">Synced</span>
+              </div>
+              <div class="field" data-at="0.86" style="grid-template-columns:104px 1fr"><span class="field-k">Handoff</span><span class="field-v">Brief + transcript + MEDDPICC written to Salesforce</span></div>
+            </div>
+          </article>
+
+          <!-- stage 7 -->
+          <article class="panel" data-panel="6">
+            <div class="panel-head">
+              <span class="pill cy">Step 07 · Revenue</span>
+              <span class="mono muted" style="font-size:10px">closed-won · 34 days elapsed · demo</span>
+            </div>
+            <div class="panel-body">
+              <div class="revbig">
+                <div class="lab">Revenue influenced</div>
+                <div class="num" id="storyRev" data-mirror="expected">—</div>
+                <div class="bars" id="storyBars">
+                  <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <div class="hero-trust" style="margin-top:6px">
+                  <span><span class="dot ok"></span> 0 human touches</span>
+                  <span><span class="dot ok"></span> 1 meeting</span>
+                  <span><span class="dot ok"></span> <span data-mirror="deal">[your deal size]</span> contract</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+      <div class="story-prog"><i id="storyBar"></i></div>
+      <div class="story-hint"><span>Scroll to run the agent</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+      </div>
+    </div>
+  </div>
+</section>

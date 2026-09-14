@@ -1,0 +1,73 @@
+{
+  "_comment": "Global locale registry — one list for the whole product (site, app and admin read this and nothing else). `status` is honest: 'reviewed' means a native speaker has checked it, 'draft' means it is machine-assisted and needs review before you rely on it.",
+  "defaultLocale": "en",
+  "locales": [
+    {
+      "code": "en",
+      "name": "English",
+      "native": "English",
+      "dir": "ltr",
+      "status": "reviewed",
+      "currency": "USD",
+      "dateFormat": "MMM d, yyyy",
+      "numberFormat": "1,234.56",
+      "weekStart": "monday"
+    },
+    {
+      "code": "fr",
+      "name": "French",
+      "native": "Français",
+      "dir": "ltr",
+      "status": "draft",
+      "currency": "EUR",
+      "dateFormat": "d MMM yyyy",
+      "numberFormat": "1 234,56",
+      "weekStart": "monday"
+    },
+    {
+      "code": "de",
+      "name": "German",
+      "native": "Deutsch",
+      "dir": "ltr",
+      "status": "draft",
+      "currency": "EUR",
+      "dateFormat": "dd.MM.yyyy",
+      "numberFormat": "1.234,56",
+      "weekStart": "monday"
+    },
+    {
+      "code": "es",
+      "name": "Spanish",
+      "native": "Español",
+      "dir": "ltr",
+      "status": "draft",
+      "currency": "EUR",
+      "dateFormat": "d MMM yyyy",
+      "numberFormat": "1.234,56",
+      "weekStart": "monday"
+    },
+    {
+      "code": "pt",
+      "name": "Portuguese",
+      "native": "Português",
+      "dir": "ltr",
+      "status": "draft",
+      "currency": "BRL",
+      "dateFormat": "dd/MM/yyyy",
+      "numberFormat": "1.234,56",
+      "weekStart": "monday"
+    },
+    {
+      "code": "ar",
+      "name": "Arabic",
+      "native": "العربية",
+      "dir": "rtl",
+      "status": "draft",
+      "currency": "AED",
+      "dateFormat": "d MMM yyyy",
+      "numberFormat": "1.234,56",
+      "weekStart": "sunday"
+    }
+  ],
+  "supportedBySite": ["en", "fr", "de", "es", "pt", "ar"]
+}

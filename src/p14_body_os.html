@@ -1,0 +1,317 @@
+<!-- ============================================================
+     VIEW: REVENUEPILOT OS — the platform console
+     Shell · rail · top bar (kill switch) · Command Center · Agents · Supervisor
+     ============================================================ -->
+<main id="view-console" class="os" hidden>
+  <div class="os-shell">
+
+    <!-- ================= RAIL ================= -->
+    <aside class="os-side">
+      <button class="ws-switch" id="wsSwitch" data-cursor="button" aria-label="Switch workspace">
+        <span class="ws-av" id="wsAv" aria-hidden="true">—</span>
+        <span class="ws-t"><b id="wsName">Your workspace</b><span id="wsPlan">Revenue team</span></span>
+        <span class="ws-caret" id="wsCaret">▾</span>
+      </button>
+
+      <div class="os-grp">Operate</div>
+      <button class="os-nav on" data-os="command" data-cursor="button">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+        Command Center
+      </button>
+      <button class="os-nav" data-os="agents" data-cursor="button">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.4 6-5.4s6 2.1 6 5.4"/><path d="M16 6.5a3 3 0 0 1 0 5"/></svg>
+        Agents <span class="n-badge hot" id="badgeAgents">9</span>
+      </button>
+      <button class="os-nav" data-os="supervisor" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3v5"/><rect x="7" y="8" width="10" height="6" rx="2"/><path d="M12 14v3M7 21h10M4 21v-3a2 2 0 0 1 2-2M20 21v-3a2 2 0 0 0-2-2"/></svg>
+        Supervisor <span class="n-badge warn" id="badgeSup">0</span>
+      </button>
+      <button class="os-nav" data-os="approvals" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="3"/></svg>
+        Approvals <span class="n-badge" id="badgeAppr">0</span>
+      </button>
+      <button class="os-nav" data-os="copilot" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M5 12h4M15 12h4"/><circle cx="12" cy="12" r="3.4"/></svg>
+        Copilot
+      </button>
+      <button class="os-nav" data-os="inbox" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 7l8 6 8-6"/></svg>
+        Inbox <span class="n-badge" id="badgeInbox">0</span>
+      </button>
+
+      <div class="os-grp">Intelligence</div>
+      <button class="os-nav" data-os="prospects" data-cursor="button">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        Prospects
+      </button>
+      <button class="os-nav" data-os="intel" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3l2.4 5.2 5.6.7-4.1 3.9 1 5.6-4.9-2.7-4.9 2.7 1-5.6L4 8.9l5.6-.7z"/></svg>
+        Lead Intelligence
+      </button>
+      <button class="os-nav" data-os="revenue" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M3 17l5-5 4 3 8-8"/><path d="M15 7h5v5"/></svg>
+        Revenue
+      </button>
+
+      <div class="os-grp">Build</div>
+      <button class="os-nav" data-os="builder" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/><circle cx="12" cy="12" r="3"/></svg>
+        Agent Builder
+      </button>
+      <button class="os-nav" data-os="marketplace" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M4 8h16l-1.5 11H5.5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        Marketplace
+      </button>
+
+      <div class="os-grp">Scale</div>
+      <button class="os-nav" data-os="agency" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M14 21V9h4a2 2 0 0 1 2 2v10"/><path d="M7 8h3M7 12h3M7 16h3"/></svg>
+        Agency
+      </button>
+      <button class="os-nav" data-os="developers" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4"/></svg>
+        Developers
+      </button>
+      <button class="os-nav" data-os="trust" data-cursor="button">
+        <svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        Trust &amp; Audit
+      </button>
+      <button class="os-nav" data-os="settings" data-cursor="button">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 13.7H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 10 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        Settings
+      </button>
+
+      <div class="os-side-foot">
+        <h6>Monthly AI spend</h6>
+        <div class="v" data-money="" data-dec="2">—</div>
+        <div class="l">Projected · budget <span data-money="">—</span></div>
+        <div class="progline" style="margin-top:10px"><i style="width:0%"></i></div>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <div class="os-main">
+      <div class="os-top">
+        <div>
+          <h2 id="osTitle">Command Center</h2>
+          <div class="sub" id="osSub">Your revenue workspace · no data source connected</div>
+        </div>
+        <div class="os-top-act">
+          <span class="pill" id="osSource" title="This workspace reads from your own connected systems. Nothing is shown until a source is connected."><span class="dot"></span> No source connected</span>
+          <span class="clock"><span class="dot ok"></span><b id="osClock">--:--:--</b></span>
+          <!-- Both lists are built at runtime from the global registries:
+               site.config.json (currency list) and i18n/locales.json (locales). -->
+          <label class="sr-only" for="osCurrency">Currency</label>
+          <select class="sel" id="osCurrency" aria-label="Display currency"></select>
+          <label class="sr-only" for="osLang">Language</label>
+          <select class="sel" id="osLang" aria-label="Interface language"></select>
+          <button class="kill" id="killSwitch" data-cursor="button" aria-pressed="false">
+            <span class="led"></span> <span id="killLabel">Pause all agents</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="osBanner"></div>
+
+      <div class="os-panes">
+
+        <!-- ============ COMMAND CENTER ============ -->
+        <section class="os-pane on" data-os-pane="command">
+          <div class="grid-2">
+            <div class="cc-hero os-live">
+              <div class="cc-top">
+                <div class="cc-id">
+                  <span class="cc-av"></span>
+                  <div><b>Agent: your agent</b><span>AI Revenue Specialist · Sales Agent</span></div>
+                </div>
+                <span class="cc-live" id="ccStatus"><span class="dot ok"></span> Ready</span>
+              </div>
+              <div class="cc-obj">
+                <div class="k">Current objective</div>
+                <div class="v"><span data-money="">—</span> pipeline / month</div>
+                <div class="progline"><i id="ccObjBar" style="width:0"></i></div>
+                <div class="r" id="ccObjNote">No target set.</div>
+                <div class="now-line"><span class="spin"></span><span id="ccDoing">No work queued</span></div>
+              </div>
+              <div class="os-sec">
+                <div class="os-h"><h3 style="font-size:13.5px">Why this, now</h3></div>
+                <div class="r" style="font-size:12.9px;color:var(--tx-2);line-height:1.62" id="ccWhy">
+                  Enter prospects, conversion rates and deal size in the pipeline calculator and this console
+                  reports your numbers. With no workspace connected there is nothing to rank, so this panel
+                  stays empty rather than inventing a prospect to talk about.
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-x">
+              <div class="os-h"><div><h3>Today</h3><p id="ccDate">—</p></div></div>
+              <div class="grid-2" style="gap:10px">
+                <div class="next-item"><span class="t">Prospects in your model</span><span class="w nums" data-mirror="prospects">—</span></div>
+                <div class="next-item"><span class="t">Qualified</span><span class="w nums" data-mirror="qualified">—</span></div>
+                <div class="next-item"><span class="t">Conversations</span><span class="w nums" data-mirror="conversations">—</span></div>
+                <div class="next-item"><span class="t">Meetings</span><span class="w nums" data-mirror="meetings">—</span></div>
+              </div>
+              <div class="next-item" style="margin-top:10px;border-color:rgba(90,231,255,.28);background:rgba(90,231,255,.05)">
+                <span class="t">Expected revenue / month</span>
+                <span class="w nums" style="color:var(--cy);font-size:14px" data-mirror="expected">—</span>
+              </div>
+              <div class="os-sec">
+                <div class="os-h"><h3 style="font-size:13px">What happens next</h3></div>
+                <div class="next-list" id="ccNext"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="os-sec">
+            <div class="os-h">
+              <div><h3>Agent fleet</h3><p>9 specialists · one revenue loop</p></div>
+              <div class="r"><button class="btn btn-sm btn-ghost" data-os-jump="supervisor" data-cursor="button">Open supervisor →</button></div>
+            </div>
+            <div class="grid-3" id="ccFleet"></div>
+          </div>
+
+          <div class="os-sec">
+            <div class="grid-2">
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Revenue funnel · today</h3><p>prospect → revenue</p></div></div>
+                <div class="donut">
+                  <div class="ring2">
+                    <svg viewBox="0 0 120 120" aria-hidden="true">
+                      <circle class="bgc" cx="60" cy="60" r="52"/>
+                      <circle class="fgc" id="ccFunnelRing" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+                    </svg>
+                    <div class="n"><b class="nums" id="ccFunnelVal">0%</b><span>to target</span></div>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div class="next-list" id="ccFunnel"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-x">
+                <div class="os-h">
+                  <div><h3>Activity timeline</h3><p>every agent action, explainable</p></div>
+                  <div class="r"><span class="pill cy"><span class="dot"></span> Live</span></div>
+                </div>
+                <div class="logstream" id="osActivity" style="max-height:260px"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ AGENTS ============ -->
+        <section class="os-pane" data-os-pane="agents">
+          <div class="os-h">
+            <div><h3>Specialized agents</h3><p id="agentsMeta">Agent roles from your configuration · none deployed</p></div>
+            <div class="r">
+              <button class="btn btn-sm btn-ghost" data-os-jump="builder" data-cursor="button">+ New agent</button>
+              <button class="btn btn-sm btn-primary magnet" data-os-jump="builder" data-cursor="button">Assemble agent <span class="ar">→</span></button>
+            </div>
+          </div>
+          <div class="grid-3" id="osAgentGrid"></div>
+
+          <div class="os-sec split b">
+            <div class="panel-x">
+              <div class="os-h"><div><h3 id="agentDetailName">No agent selected</h3><p id="agentDetailRole">Select an agent to inspect it</p></div></div>
+              <div class="os-h" style="margin-top:14px"><div><h3 style="font-size:12.5px">Autonomy level</h3></div></div>
+              <div class="ladder" id="autonomyLadder"></div>
+              <div class="os-h" style="margin-top:20px"><div><h3 style="font-size:12.5px">Permissions</h3><p>configured separately from autonomy</p></div></div>
+              <div class="perm" id="permMatrix"></div>
+            </div>
+
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Agent analytics · <span id="agentAnalyticsName">—</span></h3><p>no data yet</p></div>
+                  <div class="r"><button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Nothing to export yet — connect a data source first.">Export</button></div>
+                </div>
+                <div class="kv" id="agentStats"></div>
+                <div class="os-sec">
+                  <div class="os-h"><h3 style="font-size:12.5px">ROI</h3></div>
+                  <div class="grid-2" style="gap:10px">
+                    <div class="fc"><div class="k">Revenue influenced</div><div class="v" data-money="">—</div><div class="d">needs connected revenue data</div></div>
+                    <div class="fc hot"><div class="k">AI operating cost</div><div class="v" data-money="">—</div><div class="d">tokens + tool calls</div></div>
+                  </div>
+                  <div class="fc" style="margin-top:12px;border-color:rgba(70,227,164,.3)">
+                    <div class="k">Cost per qualified lead</div><div class="v" style="color:#a9f4d5">—</div>
+                    <div class="d">appears once revenue is attributed to agents</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Monthly AI budget</h3><p>spending control · pauses work if exceeded</p></div></div>
+                <div class="ctrl">
+                  <div class="ctrl-lab"><span>$100</span><b id="budgetLab">—</b></div>
+                  <input type="range" min="100" max="2000" step="50" value="500" id="budgetSlider" aria-label="Monthly AI budget">
+                  <div class="ctrl-val" id="budgetNote">No spend recorded yet</div>
+                </div>
+                <label class="next-item" style="margin-top:12px;cursor:pointer">
+                  <span class="sw on" data-toggle="pauseOnBudget"></span>
+                  <span class="t">Pause if budget exceeded</span>
+                  <span class="w">SAFE</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ SUPERVISOR ============ -->
+        <section class="os-pane" data-os-pane="supervisor">
+          <div class="os-h">
+            <div><h3>Agent Supervisor</h3><p>orchestration layer · assigns, monitors, intervenes</p></div>
+            <div class="r">
+              <span class="pill vi">Policy: balanced</span>
+              <span class="pill cy" id="supMeta">No exceptions</span>
+            </div>
+          </div>
+
+          <div class="sup-stage">
+            <svg class="sup-svg" viewBox="0 0 780 300" role="img" aria-label="Supervisor orchestrating research, sales and follow-up agents">
+              <path class="lnk on" d="M390 64 V98"/>
+              <path class="lnk" id="sl1" d="M390 138 V162 H150 V196"/>
+              <path class="lnk on" id="sl2" d="M390 138 V162 H390 V196"/>
+              <path class="lnk warnlnk" id="sl3" d="M390 138 V162 H630 V196"/>
+              <path class="lnk" d="M150 246 V266 H390 V276"/>
+              <path class="lnk" d="M390 246 V276"/>
+              <path class="lnk" d="M630 246 V266 H390 V276"/>
+              <g class="sup-node hub" data-sup="hub">
+                <rect x="290" y="28" width="200" height="38" rx="11"/>
+                <text x="390" y="47">Supervisor</text>
+                <text class="meta" x="390" y="60">policy · balanced</text>
+              </g>
+              <g class="sup-node" data-sup="n1"><rect x="70" y="196" width="160" height="50" rx="11"/><text x="150" y="216">Research Agent</text><text class="meta" x="150" y="230">idle</text></g>
+              <g class="sup-node" data-sup="n2"><rect x="310" y="196" width="160" height="50" rx="11"/><text x="390" y="216">Sales Agent</text><text class="meta" x="390" y="230">idle</text></g>
+              <g class="sup-node warn" data-sup="n3"><rect x="550" y="196" width="160" height="50" rx="11"/><text x="630" y="216">Follow-up Agent</text><text class="meta" x="630" y="230">idle</text></g>
+              <g class="sup-node" data-sup="n4"><rect x="290" y="276" width="200" height="30" rx="10"/><text x="390" y="291">Business revenue</text></g>
+              <circle class="pulse" id="supPulse" r="3.2" opacity="0"/>
+            </svg>
+          </div>
+
+          <div class="os-sec grid-2">
+            <div class="panel-x">
+              <div class="os-h"><div><h3>Exception queue</h3><p>supervisor interventions · newest first</p></div></div>
+              <div class="interv" id="supQueue"></div>
+            </div>
+            <div>
+              <div class="panel-x">
+                <div class="os-h"><div><h3>Work reallocation</h3><p>proposed by supervisor</p></div></div>
+                <div class="why" id="supRealloc"></div>
+                <div class="core-legend" style="margin-top:14px">
+                  <span class="pill" id="supProjection">Projection needs your inputs</span>
+                  <span class="pill">same AI budget</span>
+                </div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h">
+                  <div><h3>Human approval requests</h3><p>escalated by policy</p></div>
+                  <div class="r"><button class="btn btn-sm btn-ghost" data-os-jump="approvals" data-cursor="button">Open inbox →</button></div>
+                </div>
+                <div class="interv" id="supApprovals"></div>
+              </div>
+              <div class="panel-x" style="margin-top:14px">
+                <div class="os-h"><div><h3>Daily summary</h3><p>written on request</p></div></div>
+                <p style="font-size:13.2px;line-height:1.68;color:var(--tx-2);margin-top:10px" id="supSummary"></p>
+                <div class="r" style="margin-top:14px"><button class="btn btn-sm btn-ghost" data-cursor="button" data-toast="Nothing to send yet — the summary appears after a day with activity.">Send to Slack</button></div>
+              </div>
+            </div>
+          </div>
+        </section>
