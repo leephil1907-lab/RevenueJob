@@ -118,7 +118,31 @@ your provider) and a **DMARC** policy (`v=DMARC1; p=none; rua=mailto:…` to sta
 The logo in every email is an absolute `https://your-domain/assets/icons/…` URL,
 so it renders once the domain is live and `site.url` is set.
 
-## 6. Backups (five minutes, worth it)
+## 6. Images: what is generated, and where your own artwork goes
+
+There is no stock photography and no AI-generated imagery anywhere in this
+project. Every image is vector design rendered from the brand colours in
+`site.config.json` by `node tools/build-assets.mjs`:
+
+| file | what it is |
+| --- | --- |
+| `assets/logo.svg`, `assets/logo-mark.svg` | the wordmark and the mark used by the header and by every email |
+| `assets/icons/*` | favicons, the 192/512 app icons, the maskable icon, `favicon.ico` |
+| `assets/og-image.png` | the 1200×630 card shown when the site is shared |
+
+Two consequences worth knowing:
+
+* **The social card is a picture of the config, not a live view of it.** When
+  `site.url` is still a placeholder the card carries no address line at all —
+  a made-up domain on a shared image is worse than none — and it starts showing
+  the real domain once you set it and rebuild. `node assemble.js` warns when the
+  card is older than `site.config.json`.
+* **Rebuild assets where `rsvg-convert` exists** (your machine, not the host):
+  `sudo apt-get install librsvg2-bin && node tools/build-assets.mjs`, then commit
+  the files and deploy. That is also how you swap in your own artwork: replace
+  the files, keep the same paths (`site.config.json` declares them).
+
+## 7. Backups (five minutes, worth it)
 
 Everything is plain files. One cron line on the host — or a scheduled job that
 pulls from the disk — is enough:
@@ -131,7 +155,7 @@ Keep them off the machine that runs the app. Restoring is copying the file back:
 the store validates itself on read and quarantines a corrupt file rather than
 overwriting it.
 
-## 7. Before you announce it
+## 8. Before you announce it
 
 ```bash
 node tools/deploy-check.mjs --url https://your-domain
@@ -148,7 +172,7 @@ domain in `site.config.json` (`site.url`) → `node assemble.js` → publish fro
 console → send yourself an enquiry from the public form and reply to it from the
 console → check the mail arrived with the logo.
 
-## 8. What this deployment is not
+## 9. What this deployment is not
 
 * **Not horizontally scalable.** One process, one disk. The store is a JSON file
   with a lock, not a database.

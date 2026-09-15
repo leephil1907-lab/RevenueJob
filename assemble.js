@@ -43,6 +43,18 @@ REQUIRED.forEach(k => {
 const DEFAULT_URL = 'https://revenuepilot.example.com';
 if (cfg.site.url === DEFAULT_URL) {
   warn(`site.url is still the placeholder (${DEFAULT_URL}) — set your real domain before deploying, or canonical links and hreflang will point at the wrong host`);
+
+/* the social card is a rendered PNG, so it cannot follow the config by itself:
+   if the config moved on, say so rather than let a stale card be shared */
+{
+  const ogImage = path.join(__dirname, 'assets', 'og-image.png');
+  const cfgFile = path.join(__dirname, 'site.config.json');
+  try {
+    if (fs.existsSync(ogImage) && fs.statSync(ogImage).mtimeMs < fs.statSync(cfgFile).mtimeMs) {
+      warn('assets/og-image.png is older than site.config.json — run `node tools/build-assets.mjs` so the shared card carries the current headline and domain (needs rsvg-convert)');
+    }
+  } catch (e) { /* nothing to compare — the asset check below reports it */ }
+}
 }
 if (!/^https:\/\//.test(cfg.site.url)) fail('config: site.url must be an absolute https:// URL');
 if (cfg.site.url.endsWith('/')) warn('config: site.url should not end with a slash');

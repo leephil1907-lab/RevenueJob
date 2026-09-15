@@ -26,7 +26,12 @@ const ROOT = new URL('..', import.meta.url).pathname.replace(/\/$/, '');
 const cfg = JSON.parse(readFileSync(`${ROOT}/site.config.json`, 'utf8'));
 const locales = JSON.parse(readFileSync(`${ROOT}/i18n/locales.json`, 'utf8'));
 
-const url = cfg.site.url.replace(/\/$/, '');
+/* The social card carries the real domain once there is one. While
+   site.config.json still holds a placeholder, the card simply has no address
+   line: a made-up domain printed on a shared image is worse than none. */
+const url = cfg.site.url.replace(/\/$/, '');   // robots, sitemap and feed use the full address
+const PLACEHOLDER_HOST = /example\.(com|org|net)|your-domain|placeholder/i.test(cfg.site.url);
+const host = PLACEHOLDER_HOST ? '' : cfg.site.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const C = { primary: cfg.brand.primary, accent: cfg.brand.accent, surface: cfg.brand.surface };
 const FONT = 'Liberation Sans, DejaVu Sans, Helvetica, Arial, sans-serif';
 
@@ -145,7 +150,7 @@ const og = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630"
   <text x="84" y="480" font-family="${FONT}" font-size="24" fill="#a9b8dd">Research · Outreach · Qualification · Meetings · Follow-up</text>
   <text x="84" y="516" font-family="${FONT}" font-size="24" fill="#a9b8dd">Human approval where it matters. Attribution you can audit.</text>
 
-  <text x="84" y="576" font-family="${FONT}" font-size="19" fill="#6d7ca4">${url.replace(/^https?:\/\//, '')}</text>
+${host ? `  <text x="84" y="576" font-family="${FONT}" font-size="19" fill="#6d7ca4">${host}</text>` : ''}
   <rect x="0" y="0" width="1200" height="6" fill="url(#og-stroke)"/>
 </svg>`;
 
