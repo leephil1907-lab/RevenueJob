@@ -11,7 +11,7 @@
  */
 import puppeteer from 'puppeteer';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readdirSync, readFileSync } from 'node:fs';
 import { createServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -64,8 +64,9 @@ out.resetFromHash = await vis('[data-panel="reset"]');
 out.codeFilled = await p.$eval('#resetCode', el => el.value);
 // submit the register form for real through the UI
 await go(B + '/app#register');
+const account = 'ui-' + Date.now() + '@example.com';
 await p.type('#r-name', 'Preview Tester');
-await p.type('#r-email', 'ui-' + Date.now() + '@example.com');
+await p.type('#r-email', account);
 await p.type('#r-pass', 'a preview passphrase 42');
 await p.click('#registerForm button[type=submit]');
 await new Promise(r => setTimeout(r, 900));
@@ -81,6 +82,35 @@ if (area) await area.type('This is a real submission from the preview, checking 
 await p.click('form[data-api] button[type=submit]');
 await new Promise(r => setTimeout(r, 900));
 out.enquiryNote = await p.$eval('form[data-api] [data-note]', el => el.hidden ? 'hidden' : el.textContent.slice(0, 70)).catch(() => 'missing');
+/* the confirmation link, then signing in the way a person does: this is the
+   journey that matters most, and it is the one a JSON-only form used to break */
+let code = '';
+if (own) {
+  const dir = join(own.dir, 'outbox');
+  for (let i = 0; i < 40 && !code; i++) {
+    let names = [];
+    try { names = readdirSync(dir).filter(f => f.endsWith('.txt')); } catch (e) { /* nothing queued yet */ }
+    for (const n of names) {
+      const found = (readFileSync(join(dir, n), 'utf8').match(/code=([a-f0-9]{8,})/) || [])[1];
+      if (found) { code = found; break; }
+    }
+    if (!code) await new Promise(r => setTimeout(r, 150));
+  }
+}
+out.confirmationLink = !!code;
+if (code) {
+  await go(B + '/api/verify?code=' + code);
+  out.addressConfirmed = /confirmed/i.test(await p.content());
+}
+await go(B + '/app');
+await p.type('#signinForm input[name="email"]', account);
+await p.type('#signinForm input[name="password"]', 'a preview passphrase 42');
+await p.click('#signinForm button[type=submit]');
+await new Promise(r => setTimeout(r, 1200));
+out.signedIn = !!(await p.$('#tickets'));
+out.signInNote = await p.$eval('#signinForm [data-note]', el => el.hidden ? 'hidden' : el.textContent.slice(0, 70)).catch(() => 'none');
+if (!out.signedIn) out.signInLandedOn = (await p.content()).slice(0, 90).replace(/\s+/g, ' ');
+
 out.errors = errs.slice(0, 4);
 console.log(JSON.stringify(out, null, 2));
 await b.close();
@@ -93,6 +123,9 @@ if (!out.forgotFromHash) broken.push('forgot panel did not open from the hash');
 if (!out.resetFromHash) broken.push('reset panel did not open from the hash');
 if (String(out.registerNote).startsWith('missing')) broken.push('registration produced no note');
 if (String(out.enquiryNote).startsWith('missing')) broken.push('enquiry produced no note');
+if (!out.confirmationLink) broken.push('registration queued no confirmation link');
+if (out.addressConfirmed === false) broken.push('the confirmation link was rejected');
+if (!out.signedIn) broken.push('signing in through the form did not reach the dashboard (landed on: ' + (out.signInLandedOn || '?') + ')');
 if (out.errors && out.errors.length) broken.push(...out.errors);
 if (broken.length) {
   console.log('\n  ' + broken.length + ' problem(s): ' + broken.join(' | ') + '\n');

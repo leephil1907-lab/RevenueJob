@@ -142,6 +142,27 @@ Two consequences worth knowing:
   the files and deploy. That is also how you swap in your own artwork: replace
   the files, keep the same paths (`site.config.json` declares them).
 
+### Product screenshots on the page
+
+The section called *Photographed from the build* shows `assets/product/*.webp`:
+real screenshots of this application running, captured by
+
+```bash
+node tools/capture-product.mjs     # needs Chromium; ~30 s; writes 1x + 2x + manifest.json
+```
+
+It starts the app and the console against a throwaway store, registers a
+workspace, signs in through the form, opens a ticket and answers it from the
+console, and photographs what the browser shows. The account is
+`owner@example.com` and the one message in the thread says what it is, so no
+customer or figure in those pictures is invented; `assets/product/manifest.json`
+records the size and alt text of every shot. Re-run it after a design change and
+commit the new files — the page reads its sizes from that manifest.
+
+If you would rather show your own screens, capture them the same way (or replace
+the files, keeping the names and the manifest in step).
+
+
 ## 7. Backups (five minutes, worth it)
 
 Everything is plain files. One cron line on the host — or a scheduled job that

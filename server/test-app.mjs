@@ -160,6 +160,23 @@ try {
   const login = await post('/api/login', { email: EMAIL, password: PASSWORD });
   const sid = cookieValue(login.cookies);
   ok('sign-in returns a session cookie', sid ? `rp_sid ${sid.slice(0, 8)}…` : JSON.stringify(login.json), !!sid);
+
+  /* the sign-in form is posted by a browser that may have no JavaScript: that
+     path must end at the dashboard, never on a JSON body */
+  const page = await api('/app');
+  const signInFormEnhanced = /id="signinForm"[^>]*data-api/.test(page.text) &&
+    /id="signinForm"[\s\S]{0,700}data-note/.test(page.text);
+  ok('the sign-in form is enhanced and can show a result',
+    `data-api ${/id="signinForm"[^>]*data-api/.test(page.text) ? 'yes' : 'NO'} · note ${/id="signinForm"[\s\S]{0,700}data-note/.test(page.text) ? 'yes' : 'NO'}`,
+    signInFormEnhanced);
+  const form = { 'content-type': 'application/x-www-form-urlencoded' };
+  const nativeLogin = await api('/api/login', { method: 'POST', headers: form, body: `email=${encodeURIComponent(EMAIL)}&password=${encodeURIComponent(PASSWORD)}` });
+  ok('signing in from a plain form redirects to the dashboard',
+    `HTTP ${nativeLogin.status} → ${JSON.stringify(nativeLogin.cookies[0] || '').slice(0, 22)}`, nativeLogin.status === 303 && !!cookieValue(nativeLogin.cookies));
+  const nativeBad = await api('/api/login', { method: 'POST', headers: form, body: `email=${encodeURIComponent(EMAIL)}&password=not-the-password` });
+  ok('a plain form with a wrong password comes back as a page, not JSON',
+    `HTTP ${nativeBad.status} · starts with ${JSON.stringify(nativeBad.text.slice(0, 1))}`,
+    nativeBad.status === 401 && nativeBad.text.startsWith('<') && /do not match/i.test(nativeBad.text));
   const csrf = sha(`csrf:${sid}:rp-app`);
   const auth = { cookie: `rp_sid=${sid}` };
 

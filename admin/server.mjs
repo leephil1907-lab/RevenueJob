@@ -230,7 +230,7 @@ border:1px solid var(--line);border-radius:999px;padding:4px 8px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 label{display:block;font:600 11.5px/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--dim2);margin-bottom:6px}
-input[type=text],input[type=password],input[type=number],textarea,select{width:100%;padding:11px 12px;border-radius:9px;
+input,textarea,select{width:100%;padding:11px 12px;border-radius:9px;
 background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--ink);font:14px/1.5 var(--sans)}
 input:focus,textarea:focus,select:focus{outline:none;border-color:rgba(90,231,255,.45)}
 textarea{min-height:90px;font-family:var(--mono);font-size:12.5px;line-height:1.6}
@@ -616,7 +616,7 @@ function inboxPage(flash, opts = {}) {
     : `<tr><td colspan="4" class="muted">Nothing here yet. ${filter === 'open' ? 'Every conversation is closed.' : ''}</td></tr>`;
 
   const detail = current ? `
-    <div class="card">
+    <div class="card" id="thread">
       <div class="row" style="justify-content:space-between;align-items:flex-start;gap:12px">
         <div>
           <h3 style="font-size:16px">${esc(current.subject)}</h3>
@@ -649,7 +649,7 @@ function inboxPage(flash, opts = {}) {
 
   const accounts = db.users.slice(0, 300);
   const composer = `
-    <div class="card">
+    <div class="card" id="composer">
       <h3 style="font-size:16px;margin-bottom:4px">Write to a customer</h3>
       <p class="muted" style="font-size:13px">Free-form message, sent under the site logo from ${esc(process.env.MAIL_FROM || 'the configured sender')}.</p>
       <form method="POST" action="/inbox/compose" class="stack">

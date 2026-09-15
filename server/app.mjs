@@ -286,11 +286,12 @@ function signInPage(flash) {
         <h1 style="font-size:23px">Welcome back</h1>
         <p class="muted">Sign in to your dashboard, tickets and notifications.</p>
         ${flash ? `<div class="notice ${flash.kind}">${esc(flash.text)}</div>` : ''}
-        <form method="POST" action="/api/login" id="signinForm">
+        <form method="POST" action="/api/login" id="signinForm" data-api>
           <div class="field"><label for="email">Email</label>
             <input id="email" name="email" type="email" autocomplete="email" required></div>
           <div class="field"><label for="password">Password</label>
             <input id="password" name="password" type="password" autocomplete="current-password" required></div>
+          <div class="notice" data-note hidden></div>
           <button class="btn primary" style="width:100%;justify-content:center" type="submit">Sign in</button>
         </form>
         <p class="muted" style="margin-top:14px;font-size:13.5px">
@@ -635,12 +636,28 @@ const server = createServer(async (req, res) => {
     form.forEach((v, k) => { out[k] = v; });
     return out;
   };
+  /* the dashboard script posts JSON; a browser with JavaScript off posts the
+     form itself. Both have to end somewhere sensible — never on a JSON body. */
+  const nativeForm = !String(req.headers['content-type'] || '').includes('application/json');
   const wantsJson = (req.headers.accept || '').includes('application/json') ||
     (req.headers['content-type'] || '').includes('application/json') ||
     path.startsWith('/api/');
   const respond = (code, payload, flashRedirect) => {
     if (flashRedirect) return html(res, 303, '', { location: flashRedirect });
-    if (wantsJson) return json(res, code, payload);
+    if (wantsJson && !nativeForm) return json(res, code, payload);
+    if (nativeForm && (payload.message || payload.error)) {
+      /* no JavaScript: say what happened, in a page, with a way back */
+      return html(res, code, page({
+        title: payload.ok ? 'Done' : 'That did not work',
+        description: 'A result from an action on the RevenuePilot site.',
+        nav: false,
+        body: `<div style="max-width:520px;margin:12vh auto 0"><div class="card">
+          <h1 style="font-size:21px">${esc(payload.ok ? 'Done' : 'That did not work')}</h1>
+          <p class="muted">${esc(payload.message || payload.error)}</p>
+          <p style="margin-top:14px"><a class="btn" href="/app">Back to the dashboard</a></p>
+        </div></div>`
+      }));
+    }
     return html(res, code, payload.message || payload.error || 'Done.');
   };
   const clientIp = req.headers['x-forwarded-for'] ? String(req.headers['x-forwarded-for']).split(',')[0].trim() : ip;
@@ -793,6 +810,7 @@ const server = createServer(async (req, res) => {
       const user = db.users.filter(u => u.email === email)[0];
       if (!user || !verifyPassword(password, user)) {
         mutate(store => auditIn(store, 'security', `failed sign-in for ${email}`, email));
+        if (nativeForm) return html(res, 401, signInPage({ kind: 'bad', text: 'Those details do not match an account.' }));
         return respond(401, { ok: false, error: 'Those details do not match an account.' });
       }
       const sid = token(32);
@@ -806,9 +824,9 @@ const server = createServer(async (req, res) => {
         auditIn(store, 'security', `signed in ${email}`, email);
       });
       const secure = process.env.RP_SECURE_COOKIES === '1' ? '; Secure' : '';
-      return json(res, 200, { ok: true, redirect: '/app' }, {
-        'set-cookie': `rp_sid=${sid}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${SESSION_MINUTES * 60}${secure}`
-      });
+      const cookie = `rp_sid=${sid}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${SESSION_MINUTES * 60}${secure}`;
+      if (nativeForm) return html(res, 303, '', { location: '/app', 'set-cookie': cookie });
+      return json(res, 200, { ok: true, redirect: '/app' }, { 'set-cookie': cookie });
     }
 
     if (path === '/api/logout' && req.method === 'POST') {
